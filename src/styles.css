@@ -245,6 +245,7 @@
   .open-app { display: inline-flex; align-items: center; gap: .45rem; color: var(--primary-soft); font-size: .72rem; opacity: .7; transition: opacity .2s ease; }
   .product-card:hover .open-app { opacity: 1; }
   .open-app svg { width: .8rem; }
+  .product-actions { position: relative; z-index: 3; display: flex; flex-wrap: wrap; gap: .65rem; }
   .waitlist-dialog { border-color: var(--border-strong); background: var(--surface); box-shadow: var(--shadow-primary); }
   .success-message { display: flex; align-items: center; gap: .7rem; margin-top: .5rem; border-radius: .6rem; background: color-mix(in oklab, var(--success) 12%, transparent); padding: 1rem; color: var(--success); }
   .review-badge { display: flex; align-items: center; gap: .75rem; border: 1px solid var(--border); border-radius: .6rem; background: var(--surface); padding: .7rem .9rem; }
@@ -284,7 +285,11 @@
   .form-note { display: flex; align-items: center; gap: .45rem; font-size: .62rem; color: var(--muted-foreground); }
   .form-note svg { width: .8rem; color: var(--success); }
   .footer-rule { margin-block: 2rem; height: 1px; background: var(--border); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: .65rem 1.5rem; color: var(--muted-foreground); font-size: .75rem; }
   footer a:hover { color: var(--foreground); }
+  .floating-whatsapp { position: fixed; z-index: 50; right: 1.5rem; bottom: 1.5rem; display: grid; place-items: center; width: 3.5rem; height: 3.5rem; border: 1px solid color-mix(in oklab, var(--success) 55%, transparent); border-radius: 50%; background: var(--success); color: var(--deep); box-shadow: 0 16px 40px color-mix(in oklab, var(--success) 28%, transparent); transition: transform .2s ease, box-shadow .2s ease; }
+  .floating-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 20px 48px color-mix(in oklab, var(--success) 38%, transparent); }
+  .floating-whatsapp svg { width: 1.45rem; height: 1.45rem; }
 }
 
 @keyframes scroll-cue { 0%, 100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(.45rem); opacity: 1; } }
@@ -298,6 +303,7 @@
   .lab-visual, .lab-visual img { min-height: 25rem; }
   .testimonial-shell { min-height: 29rem; padding: 1.5rem; }
   .testimonial-shell > div:last-child { align-items: flex-start; flex-direction: column; }
+  .floating-whatsapp { right: 1rem; bottom: 1rem; width: 3.25rem; height: 3.25rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

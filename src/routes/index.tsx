@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
   BarChart3,
+  Building2,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -23,6 +24,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useState, type FormEvent } from "react";
+import trademarkAsset from "@/assets/logicgrid-trademark.png.asset.json";
 import teamImage from "@/assets/logicgridlab-team.jpg";
 import { Button } from "@/components/ui/button";
 import {
@@ -47,7 +49,7 @@ const whatsappUrl = "https://wa.me/923414249678";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "LogicGridLab — Premium WebApps, SaaS & SEO Agency for Etsy Sellers" },
+      { title: "LogicGridLab — Premium Software Lab | EtsyOps, SaaS, SEO" },
       {
         name: "description",
         content:
@@ -55,7 +57,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "LogicGridLab — Premium WebApps, SaaS & SEO Agency for Etsy Sellers",
+        content: "LogicGridLab — Premium Software Lab | EtsyOps, SaaS, SEO",
       },
       {
         property: "og:description",
@@ -172,7 +174,7 @@ const testimonials = [
 function Brand() {
   return (
     <a href="#top" className="flex items-center gap-3" aria-label="LogicGridLab home">
-      <img src="/favicon.png" alt="LogicGrid trademark" width={36} height={36} className="size-9" />
+      <img src={trademarkAsset.url} alt="LogicGrid trademark" width={36} height={36} className="size-9 object-contain" />
       <span className="font-display text-[17px] font-semibold text-foreground">
         LogicGrid<span className="text-primary-soft">Lab</span>
       </span>
@@ -196,10 +198,10 @@ function Header() {
         <div className="hidden items-center gap-3 md:flex">
           <a href={whatsappUrl} target="_blank" rel="noreferrer" className="whatsapp-compact">
             <MessageCircle className="size-4 text-success" />
-            +92-3414249678
+            +92-341-4249678
           </a>
           <Button variant="premium" size="default" asChild>
-            <a href="#contact">Start Your Project <ArrowRight /></a>
+            <a href="#contact">Start Project <ArrowRight /></a>
           </Button>
         </div>
         <Button
@@ -352,7 +354,7 @@ function Showcase() {
               <div className="relative z-[1] flex h-full flex-col pointer-events-none">
                 <div className="flex items-start justify-between gap-5">
                   <span className={product.live ? "status-live" : "status-upcoming"}><span />{product.status}</span>
-                  {product.live ? <img src="/favicon.png" alt="" width={42} height={42} className="size-10" /> : <span className="product-number">0{index + 1}</span>}
+                  {product.live ? <img src={trademarkAsset.url} alt="" width={42} height={42} className="size-10 object-contain" /> : <span className="product-number">0{index + 1}</span>}
                 </div>
                 <div className="mt-10">
                   <p className="product-kicker">{product.subtitle}</p>
@@ -361,7 +363,16 @@ function Showcase() {
                 </div>
                 <div className="mt-auto flex flex-wrap items-end justify-between gap-5 pt-10">
                   <div>{product.price && <strong className="block text-sm text-primary-soft">{product.price}</strong>}<span className="mt-1 block text-xs text-muted-foreground">{product.metric}</span></div>
-                  {product.waitlist ? (
+                  {product.live ? (
+                    <div className="product-actions pointer-events-auto">
+                      <Button variant="premium" asChild>
+                        <a href={product.url} target="_blank" rel="noreferrer">Open EtsyOps <ExternalLink /></a>
+                      </Button>
+                      <Button variant="glass" asChild>
+                        <a href="https://etsy.com/shop/logicgridlab" target="_blank" rel="noreferrer">Buy on Etsy — $39 <ArrowRight /></a>
+                      </Button>
+                    </div>
+                  ) : product.waitlist ? (
                     <Button variant="glass" className="pointer-events-auto" onClick={(event) => { event.preventDefault(); setWaitlistOpen(true); }}>Join Waitlist <ArrowRight /></Button>
                   ) : <span className="open-app">Click to open app <ExternalLink /></span>}
                 </div>
@@ -435,17 +446,18 @@ function Contact() {
   return (
     <section id="contact" className="section-shell contact-section">
       <div className="container-wide">
-        <SectionHeading eyebrow="Start a conversation" title="Let’s Build Your Growth Engine" text="Tell us what you are building. You will speak directly with the product team — no sales maze." />
+        <SectionHeading eyebrow="Gujranwala HQ · Global Delivery" title="Let’s Build Your Growth Engine" text="Tell us what you are building. You will speak directly with the product team — no sales maze." />
         <div className="mt-12 grid gap-6 lg:grid-cols-[.85fr_1.15fr]">
           <div className="contact-card">
-            <div className="flex items-center gap-3"><img src="/favicon.png" alt="" width={48} height={48} className="size-12" /><div><strong>LogicGridLab (LogicGrid)</strong><span>A Premium Software Lab</span></div></div>
+            <div className="flex items-center gap-3"><img src={trademarkAsset.url} alt="LogicGrid trademark" width={48} height={48} className="size-12 object-contain" /><div><strong>Gujranwala HQ · Global Delivery</strong><span>Engineering Digital Growth Engines</span></div></div>
             <div className="contact-list">
-              <div><Users /><span><small>Founder</small><strong>Ejaz Ahmed</strong></span></div>
-              <div><MapPin /><span><small>Head office</small><strong>Mumtaz Market, opposite ChaseUp<br />Main GT Road, Gujranwala</strong></span></div>
+              <div><Building2 /><span><small>Company</small><strong>LogicGridLab (Pvt) Ltd</strong></span></div>
+              <div><Users /><span><small>Founder</small><strong>Ejaz Ahmed — Full-Stack Product Engineer</strong></span></div>
+              <div><MapPin /><span><small>Address</small><strong>Mumtaz Market Opposite ChaseUp, Main GT Road,<br />Gujranwala, Punjab 52250, Pakistan</strong></span></div>
               <div><Mail /><span><small>Email</small><a href="mailto:info@logicgridlab.com">info@logicgridlab.com</a></span></div>
-              <div><Globe2 /><span><small>Hours</small><strong>Mon–Sat, 12AM–12PM PKT<br />Global support</strong></span></div>
+              <div><Globe2 /><span><small>Hours</small><strong>Mon–Sat, 12AM–12PM PKT</strong></span></div>
             </div>
-            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="whatsapp-card"><MessageCircle /><span><strong>Chat Now — Instant Reply</strong><small>+92-3414249678</small></span><ArrowRight /></a>
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="whatsapp-card"><MessageCircle /><span><strong>Chat Now — Instant Reply</strong><small>+92-341-4249678</small></span><ArrowRight /></a>
           </div>
           <form onSubmit={submit} className="contact-form">
             <div className="grid gap-5 sm:grid-cols-2">
@@ -473,19 +485,18 @@ function Contact() {
 function Footer() {
   return (
     <footer className="border-t border-border bg-deep">
-      <div className="container-wide py-10">
-        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-center"><Brand /><p className="max-w-md text-sm leading-6 text-muted-foreground">Engineering digital growth engines for ambitious sellers, brands, and startups worldwide.</p></div>
-        <div className="footer-rule" />
-        <div className="flex flex-col gap-5 text-xs text-muted-foreground lg:flex-row lg:items-center lg:justify-between">
-          <p>© 2025 LogicGridLab (Pvt) Ltd · All SaaS apps hosted on logicgridlab.com subdomains</p>
-          <div className="flex flex-wrap gap-5"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="https://etsy.com/shop/logicgridlab" target="_blank" rel="noreferrer">Etsy Shop</a></div>
+      <div className="container-wide py-12">
+        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+          <div><Brand /><p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">LogicGridLab (Pvt) Ltd — Engineering Digital Growth Engines.<br />Built in Gujranwala, Shipping Worldwide.</p></div>
+          <nav className="footer-links" aria-label="Footer navigation"><a href="https://etsy.com/shop/logicgridlab" target="_blank" rel="noreferrer">Etsy Shop</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="#contact">Contact</a></nav>
         </div>
-        <p className="mt-5 text-xs text-muted-foreground">Built with <span className="text-primary-soft">♥</span> in Gujranwala, Pakistan — Shipping Worldwide</p>
+        <div className="footer-rule" />
+        <p className="text-xs text-muted-foreground">© 2025 LogicGridLab (Pvt) Ltd · All SaaS apps hosted on logicgridlab.com subdomains</p>
       </div>
     </footer>
   );
 }
 
 function HomePage() {
-  return <div className="min-h-screen bg-background text-foreground"><Header /><main><Hero /><About /><Services /><Showcase /><Reviews /><Contact /></main><Footer /></div>;
+  return <div className="min-h-screen bg-background text-foreground"><Header /><main><Hero /><About /><Services /><Showcase /><Reviews /><Contact /></main><Footer /><a href={whatsappUrl} target="_blank" rel="noreferrer" className="floating-whatsapp" aria-label="Chat with LogicGridLab on WhatsApp"><MessageCircle /></a></div>;
 }
