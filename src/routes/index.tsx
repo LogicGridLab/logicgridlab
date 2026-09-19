@@ -392,6 +392,8 @@ function Reviews() {
   const [current, setCurrent] = useState(0);
   const next = () => setCurrent((value) => (value + 1) % testimonials.length);
   const previous = () => setCurrent((value) => (value - 1 + testimonials.length) % testimonials.length);
+  const testimonial = testimonials[current] ?? testimonials[0];
+  if (!testimonial) return null;
   return (
     <section id="reviews" className="section-shell section-tinted">
       <div className="container-wide">
@@ -406,9 +408,9 @@ function Reviews() {
           <div className="testimonial-shell" aria-live="polite">
             <div className="quote-mark">“</div>
             <div className="stars" aria-label="5 out of 5 stars">{Array.from({ length: 5 }).map((_, index) => <Star key={index} />)}</div>
-            <blockquote>{testimonials[current].quote}</blockquote>
+            <blockquote>{testimonial.quote}</blockquote>
             <div className="mt-8 flex items-end justify-between gap-4">
-              <div className="reviewer"><div>{testimonials[current].name.slice(0, 1)}</div><span><strong>{testimonials[current].name}</strong><small>{testimonials[current].shop}</small></span></div>
+              <div className="reviewer"><div>{testimonial.name.slice(0, 1)}</div><span><strong>{testimonial.name}</strong><small>{testimonial.shop}</small></span></div>
               <div className="carousel-controls">
                 <Button variant="glass" size="icon" onClick={previous} aria-label="Previous testimonial"><ChevronLeft /></Button>
                 <span>{String(current + 1).padStart(2, "0")} / 04</span>
