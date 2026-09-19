@@ -243,7 +243,7 @@ function Hero() {
   return (
     <section id="top" className="hero-grid relative overflow-hidden border-b border-border">
       <div className="hero-radiance" />
-      <div className="container-narrow relative flex min-h-[860px] flex-col items-center justify-center pb-28 pt-32 text-center sm:min-h-[900px]">
+      <div className="container-narrow relative z-10 flex min-h-[860px] flex-col items-center justify-center pb-28 pt-32 text-center sm:min-h-[900px]">
         <div className="trust-badge"><Rocket className="size-4" />Trusted by 500+ Etsy Sellers & SMEs Worldwide</div>
         <h1 className="mt-8 max-w-5xl font-display text-5xl font-semibold leading-[1.03] sm:text-6xl lg:text-[76px]">
           We Build WebApps, SaaS & <span className="text-gradient">SEO Engines</span> That Scale Your Business
