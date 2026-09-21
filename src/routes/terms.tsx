@@ -8,9 +8,10 @@ export const Route = createFileRoute("/terms")({
       { property: "og:title", content: "Terms of Service — LogicGridLab" },
       { property: "og:description", content: "General terms for LogicGridLab software products and professional services." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://logicgridlab.com/terms" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [{ rel: "canonical", href: "https://logicgridlab.com/terms" }],
   }),
   component: TermsPage,
 });
