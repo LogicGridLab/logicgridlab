@@ -8,9 +8,10 @@ export const Route = createFileRoute("/privacy")({
       { property: "og:title", content: "Privacy Policy — LogicGridLab" },
       { property: "og:description", content: "How LogicGridLab handles website and project enquiry information." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://logicgridlab.com/privacy" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [{ rel: "canonical", href: "https://logicgridlab.com/privacy" }],
   }),
   component: PrivacyPage,
 });
