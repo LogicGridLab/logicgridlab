@@ -46,11 +46,8 @@ import {
   MessagesSquare,
   PhoneCall,
   Play,
-  Search,
   ShieldCheck,
   ShoppingBag,
-  Sparkles,
-  Star,
   TrendingUp,
   Workflow,
   X,
@@ -61,6 +58,8 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "rea
 const whatsappUrl = "https://wa.me/923414249678";
 const whatsappDemoUrl = `${whatsappUrl}?text=${encodeURIComponent("Hi LogicGridLab, I would like to schedule a demo of your AI Voice Agent.")}`;
 const checkoutBase = "https://logicgridlab.lemonsqueezy.com/checkout/buy";
+const checkoutUrl = (productId: string) =>
+  `${checkoutBase}/${productId}?checkout[redirect_url]=${encodeURIComponent("https://logicgridlab.com/thank-you")}`;
 
 const navItems = [
   ["Products", "products"],
@@ -359,7 +358,6 @@ function About() {
           <Reveal className="office-card office-secondary"><img src={teamImage} loading="lazy" width={1408} height={1104} alt="LogicGridLab engineers reviewing product analytics"/><div><span>Build culture</span><strong>Focused collaboration</strong></div></Reveal>
           <div className="about-stats">{stats.map(([number,label]) => <Reveal key={label} className="stat-card"><strong>{number}</strong><span>{label}</span></Reveal>)}</div>
         </div>
-        <p className="image-note">Founder and office photography is replaceable when your final photography is ready.</p>
       </div>
     </section>
   );
@@ -405,7 +403,7 @@ function Products() {
           <div className="product-head"><span>{product.number}</span><i>{product.status}</i></div>
           <p className="tile-kicker">{product.category}</p><h3>{product.name}</h3><p>{product.copy}</p>
           <div className="product-metric"><TrendingUp/><span>{product.metric}</span></div>
-          <div className="product-bottom"><div><strong>{product.price}</strong><span>{product.cadence}</span></div><div className="product-buttons">{product.app && <Button variant="glass" asChild><a href={product.app} target="_blank" rel="noreferrer" aria-label={`Open ${product.name}`}><Play/>Demo</a></Button>}<Button variant="premium" asChild><a href={`${checkoutBase}/${product.id}`} className="lemonsqueezy-button">Buy now <ArrowRight/></a></Button></div></div>
+          <div className="product-bottom"><div><strong>{product.price}</strong><span>{product.cadence}</span></div><div className="product-buttons">{product.app && <Button variant="glass" asChild><a href={product.app} target="_blank" rel="noreferrer" aria-label={`Open ${product.name}`}><Play/>Demo</a></Button>}<Button variant="premium" asChild><a href={checkoutUrl(product.id)} className="lemonsqueezy-button">Buy now <ArrowRight/></a></Button></div></div>
         </Reveal>)}</div>
         <p className="checkout-trust"><ShieldCheck/>Secure Checkout via LemonSqueezy <span/> Instant License <span/> Lifetime Updates</p>
       </div>
@@ -427,7 +425,7 @@ function Pricing() {
   return (
     <section id="pricing" className="section-space">
       <div className="container-site"><Reveal><SectionHeading eyebrow="Straightforward starting points" title="Invest in the system you need now." copy="Choose a focused package or start a conversation for a tailored product scope." centered /></Reveal>
-        <div className="pricing-grid">{plans.map((plan) => <Reveal key={plan.name} className={`pricing-card ${plan.popular ? "pricing-popular" : ""}`}>{plan.popular && <span className="popular-label">Most popular</span>}<h3>{plan.name}</h3><p>{plan.copy}</p><div className="plan-price"><strong>{plan.price}</strong><span>{plan.suffix}</span></div><ul>{plan.features.map(feature=><li key={feature}><CheckCircle2/>{feature}</li>)}</ul><Button variant={plan.popular ? "premium" : "glass"} size="premium" className="w-full" asChild><a href={`${checkoutBase}/${plan.id}`} className="lemonsqueezy-button">Choose {plan.name}<ArrowRight/></a></Button></Reveal>)}</div>
+        <div className="pricing-grid">{plans.map((plan) => <Reveal key={plan.name} className={`pricing-card ${plan.popular ? "pricing-popular" : ""}`}>{plan.popular && <span className="popular-label">Most popular</span>}<h3>{plan.name}</h3><p>{plan.copy}</p><div className="plan-price"><strong>{plan.price}</strong><span>{plan.suffix}</span></div><ul>{plan.features.map(feature=><li key={feature}><CheckCircle2/>{feature}</li>)}</ul><Button variant={plan.popular ? "premium" : "glass"} size="premium" className="w-full" asChild><a href={checkoutUrl(plan.id)} className="lemonsqueezy-button">Choose {plan.name}<ArrowRight/></a></Button></Reveal>)}</div>
       </div>
     </section>
   );
