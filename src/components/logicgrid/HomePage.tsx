@@ -21,9 +21,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import founderImage from "@/assets/founder-ejaz.jpg";
-import officeImage from "@/assets/office-1.jpg";
-import teamImage from "@/assets/team-2.jpg";
+import { supabase } from "@/integrations/supabase/client";
+import sirEjazAsset from "@/assets/Sir_Ejaz.webp.asset.json";
+import ejazAsset from "@/assets/Ejaz.webp.asset.json";
+import ceoAsset from "@/assets/ceo.webp.asset.json";
+import headsMeetingAsset from "@/assets/Heads_meeting.webp.asset.json";
+import leadsMeetingAsset from "@/assets/Leads_meeting.webp.asset.json";
+import clientMeetingAsset from "@/assets/Meeting_with_Lee.webp.asset.json";
+import annualMeetingAsset from "@/assets/Staff_Annual_Meeting.webp.asset.json";
+import awardsAsset from "@/assets/Awards.webp.asset.json";
+import groupPhotoAsset from "@/assets/Group_photo.webp.asset.json";
 import trademarkAsset from "@/assets/logicgrid-trademark.png.asset.json";
 import {
   ArrowDown,
@@ -41,6 +48,8 @@ import {
   Globe2,
   Headphones,
   Layers3,
+  Mail,
+  Maximize2,
   Menu,
   MessageCircle,
   MessagesSquare,
@@ -54,12 +63,13 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { z } from "zod";
 
 const whatsappUrl = "https://wa.me/923414249678";
 const whatsappDemoUrl = `${whatsappUrl}?text=${encodeURIComponent("Hi LogicGridLab, I would like to schedule a demo of your AI Voice Agent.")}`;
-const checkoutBase = "https://logicgridlab.lemonsqueezy.com/checkout/buy";
-const checkoutUrl = (productId: string) =>
-  `${checkoutBase}/${productId}?checkout[redirect_url]=${encodeURIComponent("https://logicgridlab.com/thank-you")}`;
+const etsyShopUrl = "https://www.etsy.com/shop/logicgridlab";
+const invoiceUrl = (service: string) => `${whatsappUrl}?text=${encodeURIComponent(`Hi LogicGridLab, I would like to pay with Stripe and receive an official invoice for ${service}.`)}`;
+const emailSchema = z.string().trim().email().max(255);
 
 const navItems = [
   ["Products", "products"],
@@ -120,7 +130,6 @@ const products = [
     status: "Live Bestseller",
     copy: "One command center for revenue, fees, profit, listings, and ad spend across every Etsy shop.",
     metric: "120+ sellers",
-    id: "XXXX_ETSYOPS",
     featured: true,
     app: "https://etsyops.logicgridlab.com",
   },
@@ -133,7 +142,7 @@ const products = [
     status: "Pre-order",
     copy: "Keep inventory and orders synchronized across Etsy and Shopify without overselling.",
     metric: "Q4 release",
-    id: "XXXX_SHOPSYNC",
+    app: "https://shopsync.logicgridlab.com",
   },
   {
     number: "03",
@@ -144,7 +153,7 @@ const products = [
     status: "Early Access",
     copy: "Find stronger keywords and turn them into optimized Etsy titles, tags, and listings.",
     metric: "AI-assisted",
-    id: "XXXX_LISTRANK",
+    app: "https://listrank.logicgridlab.com",
   },
   {
     number: "04",
@@ -155,7 +164,7 @@ const products = [
     status: "Roadmap",
     copy: "Build thoughtful, policy-aware post-purchase journeys that earn more customer feedback.",
     metric: "Coming next",
-    id: "XXXX_REVIEWBOOST",
+    app: "https://reviewboost.logicgridlab.com",
   },
 ];
 
@@ -196,7 +205,6 @@ const plans = [
     suffix: "/month",
     copy: "Reliable maintenance for an established business website.",
     features: ["Updates & backups", "Uptime monitoring", "2 support hours", "Monthly health report"],
-    id: "XXXX_STARTER_CARE",
   },
   {
     name: "Growth Revamp",
@@ -204,7 +212,6 @@ const plans = [
     suffix: "one-time",
     copy: "A focused conversion and performance rebuild for growing brands.",
     features: ["Premium redesign", "95+ speed target", "Technical SEO", "Lead capture system"],
-    id: "XXXX_GROWTH_REVAMP",
     popular: true,
   },
   {
@@ -213,7 +220,6 @@ const plans = [
     suffix: "project",
     copy: "A production-ready web application built around your business logic.",
     features: ["Product strategy", "Custom dashboard", "Secure user accounts", "Launch support"],
-    id: "XXXX_CUSTOM_SAAS",
   },
 ];
 
@@ -228,7 +234,7 @@ const faqs = [
   ["How quickly can you ship a project?", "Focused websites and MVPs typically ship in 7–14 days once scope, assets, and feedback windows are confirmed. Larger SaaS systems are planned in clear product milestones."],
   ["Do you work with clients outside Pakistan?", "Yes. LogicGridLab operates from Gujranwala HQ and serves businesses globally through structured remote delivery and direct WhatsApp communication."],
   ["What happens after launch?", "Every build includes a defined launch handover. Ongoing care plans can cover monitoring, backups, updates, bug fixes, and priority improvements."],
-  ["How does LemonSqueezy checkout work?", "LemonSqueezy provides secure checkout and digital delivery. Product access or licence instructions are delivered after a completed payment."],
+  ["How do payments and invoices work?", "EtsyOps is available through our official Etsy shop. For services, request an invoice and we will send a secure Stripe Payment Link with an official invoice before work begins."],
   ["Can an AI agent use my existing website and tools?", "Usually, yes. We can connect voice, chat, WhatsApp, CRM, calendars, and workflow tools after reviewing their available integrations and permissions."],
   ["Will an AI agent replace my team?", "The goal is to remove repetitive response and qualification work. Your team stays in control while the agent handles routine conversations and routes important cases."],
 ];
@@ -332,6 +338,7 @@ function Hero() {
             <Button variant="glass" size="premium" asChild><a href="#products">Explore Products <ArrowDown /></a></Button>
           </div>
           <div className="hero-proof"><div className="avatar-stack"><span>SM</span><span>AK</span><span>FS</span><span>DR</span></div><div><strong>Trusted by 500+ Businesses</strong><span><span className="stars">★★★★★</span> 5.0 worldwide rating</span></div></div>
+          <div className="hero-founder"><span className="hero-founder-ring"><img src={sirEjazAsset.url} alt="Ejaz Ahmed, founder of LogicGridLab" /></span><div><strong>Ejaz Ahmed</strong><small>Founder · Full-Stack Product Engineer</small></div></div>
         </div>
         <DashboardMockup />
       </div>
@@ -340,7 +347,7 @@ function Hero() {
 }
 
 function LogoCloud() {
-  return <section className="logo-cloud"><div className="container-site"><p>Powering modern sellers</p><div>{["Etsy", "Shopify", "Vercel", "Supabase", "OpenAI", "LemonSqueezy"].map((logo) => <span key={logo}><CircleDot />{logo}</span>)}</div></div></section>;
+  return <section className="logo-cloud"><div className="container-site"><p>Powering modern sellers</p><div>{["Etsy", "Shopify", "Vercel", "Lovable Cloud", "OpenAI", "Stripe"].map((logo) => <span key={logo}><CircleDot />{logo}</span>)}</div></div></section>;
 }
 
 function About() {
@@ -351,11 +358,11 @@ function About() {
         <Reveal><SectionHeading eyebrow="Inside LogicGridLab" title="Not Freelancers. A Dedicated Product Lab." copy="A focused product company combining senior engineering, commercial thinking, and direct founder access from Gujranwala to the world." /></Reveal>
         <div className="about-bento">
           <Reveal className="founder-card">
-            <img src={founderImage} loading="lazy" width={1200} height={1504} alt="Ejaz Ahmed, founder of LogicGridLab" />
+            <img src={sirEjazAsset.url} loading="lazy" width={912} height={1172} alt="Ejaz Ahmed, founder of LogicGridLab" />
             <div className="founder-overlay"><div><span>Founder</span><h3>Ejaz Ahmed</h3><p>Full-Stack Product Engineer<br/>Etsy Automation Specialist</p></div><blockquote>“Our mission: Give small sellers the same analytics power big brands have.”</blockquote></div>
           </Reveal>
-          <Reveal className="office-card office-primary"><img src={officeImage} loading="lazy" width={1600} height={1104} alt="LogicGridLab team collaborating in a modern product lab"/><div><span>Inside LogicGrid Lab</span><strong>Team work & office environment</strong></div></Reveal>
-          <Reveal className="office-card office-secondary"><img src={teamImage} loading="lazy" width={1408} height={1104} alt="LogicGridLab engineers reviewing product analytics"/><div><span>Build culture</span><strong>Focused collaboration</strong></div></Reveal>
+          <Reveal className="office-card office-primary"><img src={ejazAsset.url} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed working at the CEO desk in Gujranwala HQ"/><div><span>Founder at work</span><strong>CEO Desk — Gujranwala HQ</strong></div></Reveal>
+          <Reveal className="office-card office-secondary"><img src={ceoAsset.url} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed signing documents at the CEO desk"/><div><span>Founder at work</span><strong>CEO Desk — Gujranwala HQ</strong></div></Reveal>
           <div className="about-stats">{stats.map(([number,label]) => <Reveal key={label} className="stat-card"><strong>{number}</strong><span>{label}</span></Reveal>)}</div>
         </div>
       </div>
@@ -398,17 +405,60 @@ function Products() {
   return (
     <section id="products" className="section-space">
       <div className="container-site">
-        <Reveal><div className="section-heading-row"><SectionHeading eyebrow="Products Store" title="Live Products & Roadmap" copy="Every product lives on its own subdomain. Buy instantly via LemonSqueezy."/><div className="secure-checkout"><ShieldCheck/><span><strong>Secure checkout</strong><small>Instant licence · Lifetime updates</small></span></div></div></Reveal>
+        <Reveal><div className="section-heading-row"><SectionHeading eyebrow="Products Store" title="Live Products & Roadmap" copy="Explore every product on its own subdomain. EtsyOps is available through our official Etsy shop."/><div className="secure-checkout"><ShoppingBag/><span><strong>Etsy 5.0 rating</strong><small>500+ sales · Lifetime access</small></span></div></div></Reveal>
         <div className="product-grid">{products.map((product) => <Reveal key={product.name} className={`product-tile ${product.featured ? "product-featured" : ""}`}>
           <div className="product-head"><span>{product.number}</span><i>{product.status}</i></div>
           <p className="tile-kicker">{product.category}</p><h3>{product.name}</h3><p>{product.copy}</p>
           <div className="product-metric"><TrendingUp/><span>{product.metric}</span></div>
-          <div className="product-bottom"><div><strong>{product.price}</strong><span>{product.cadence}</span></div><div className="product-buttons">{product.app && <Button variant="glass" asChild><a href={product.app} target="_blank" rel="noreferrer" aria-label={`Open ${product.name}`}><Play/>Demo</a></Button>}<Button variant="premium" asChild><a href={checkoutUrl(product.id)} className="lemonsqueezy-button">Buy now <ArrowRight/></a></Button></div></div>
+          <div className="product-bottom"><div><strong>{product.price}</strong><span>{product.cadence}</span></div><div className="product-buttons">{product.app && <Button variant="glass" asChild><a href={product.app} target="_blank" rel="noreferrer" aria-label={`Open ${product.name}`}><Play/>Live Demo</a></Button>}{product.featured ? <Button variant="premium" asChild><a href={etsyShopUrl} target="_blank" rel="noreferrer">Buy on Etsy — $39 Lifetime <ArrowRight/></a></Button> : <Button variant="premium" asChild><a href={`${whatsappUrl}?text=${encodeURIComponent(`Hi LogicGridLab, notify me when ${product.name} launches.`)}`} target="_blank" rel="noreferrer">Join Early Access <ArrowRight/></a></Button>}</div></div>
         </Reveal>)}</div>
-        <p className="checkout-trust"><ShieldCheck/>Secure Checkout via LemonSqueezy <span/> Instant License <span/> Lifetime Updates</p>
+        <p className="checkout-trust"><ShoppingBag/>Etsy 5.0 rating <span/> 500+ sales <span/> Lifetime updates</p>
       </div>
     </section>
   );
+}
+
+const galleryItems = [
+  { src: ceoAsset.url, caption: "CEO Desk — Gujranwala HQ", className: "gallery-tall" },
+  { src: headsMeetingAsset.url, caption: "Leadership & Product Meetings", className: "gallery-tall" },
+  { src: leadsMeetingAsset.url, caption: "Leadership & Product Meetings", className: "gallery-wide" },
+  { src: clientMeetingAsset.url, caption: "Global Client Collaboration", className: "gallery-tall" },
+  { src: annualMeetingAsset.url, caption: "Team Culture — Annual Meeting", className: "gallery-tall" },
+  { src: awardsAsset.url, caption: "Team Culture & Awards", className: "gallery-tall" },
+  { src: groupPhotoAsset.url, caption: "The LogicGridLab Team", className: "gallery-wide" },
+];
+
+function RealGallery() {
+  const [selected, setSelected] = useState<(typeof galleryItems)[number] | null>(null);
+  useEffect(() => {
+    if (!selected) return;
+    const close = (event: KeyboardEvent) => { if (event.key === "Escape") setSelected(null); };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [selected]);
+  return <section id="team" className="section-space real-gallery-section"><div className="container-site">
+    <Reveal><div className="gallery-heading"><SectionHeading eyebrow="Inside LogicGridLab — Real Team, Real Office" title="Not Stock Photos. Our Actual Lab." copy="A closer look at founder-led product work, leadership meetings, global collaboration, and the team culture behind every launch."/><Button variant="premium" size="premium" asChild><a href="#contact">Meet the team in Gujranwala <ArrowRight/></a></Button></div></Reveal>
+    <div className="masonry-gallery">{galleryItems.map((item, index) => <Reveal key={`${item.caption}-${index}`} className={`gallery-item ${item.className}`}><button type="button" onClick={() => setSelected(item)} aria-label={`Open ${item.caption}`}><img src={item.src} loading="lazy" alt={item.caption}/><span><small>{item.caption}</small><Maximize2/></span></button></Reveal>)}</div>
+    <div className="culture-strip" aria-label="Team Culture and Awards"><figure><img src={annualMeetingAsset.url} loading="lazy" alt="LogicGridLab annual staff meeting"/><figcaption>Annual Meeting</figcaption></figure><figure><img src={awardsAsset.url} loading="lazy" alt="LogicGridLab team awards"/><figcaption>Team Awards</figcaption></figure><figure><img src={groupPhotoAsset.url} loading="lazy" alt="LogicGridLab group photo"/><figcaption>Our Team</figcaption></figure></div>
+  </div>{selected && <div className="lightbox" role="dialog" aria-modal="true" aria-label={selected.caption} onClick={() => setSelected(null)}><Button variant="glass" size="icon" onClick={() => setSelected(null)} aria-label="Close image"><X/></Button><figure onClick={(event) => event.stopPropagation()}><img src={selected.src} alt={selected.caption}/><figcaption>{selected.caption}</figcaption></figure></div>}</section>;
+}
+
+const directories = ["Product Hunt", "Futurepedia", "There’s An AI For That", "TopAI.tools", "AppSumo", "Uneed.co"];
+
+function FeaturedDirectories() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const parsed = emailSchema.safeParse(email);
+    if (!parsed.success) { setStatus("error"); return; }
+    setStatus("loading");
+    const { error } = await supabase.from("directory_waitlist").insert({ email: parsed.data.toLowerCase(), source: "ai-directories" });
+    if (error && error.code !== "23505") { setStatus("error"); return; }
+    setStatus("success");
+  };
+  const focusEmail = () => document.getElementById("directory-email")?.focus();
+  return <section className="section-space directory-section section-grid"><div className="container-site directory-inner"><Reveal><SectionHeading eyebrow="Featured on AI Platforms" title="Discover Us On Top AI Directories" copy="Follow LogicGridLab product launches across the world’s most active discovery communities." centered/></Reveal><div className="directory-grid">{directories.map((name, index) => <Reveal key={name} className="directory-card"><span className="directory-mark">{String(index + 1).padStart(2, "0")}</span><div><h3>{name}</h3><p>Launch Coming Q4</p></div><Button variant="glass" onClick={focusEmail}>Get Notified <ArrowRight/></Button></Reveal>)}</div><Reveal><form className="directory-form" onSubmit={submit} noValidate><div><Mail/><span><strong>Join the launch list</strong><small>Product announcements only. No spam.</small></span></div><label htmlFor="directory-email" className="sr-only">Email address</label><Input id="directory-email" name="email" type="email" value={email} onChange={(event) => { setEmail(event.target.value); setStatus("idle"); }} placeholder="you@company.com" maxLength={255} required aria-invalid={status === "error"}/><Button variant="premium" type="submit" disabled={status === "loading"}>{status === "loading" ? "Joining…" : "Notify Me"}<ArrowRight/></Button><p aria-live="polite">{status === "success" ? "You’re on the list. We’ll notify you before launch." : status === "error" ? "Enter a valid email address and try again." : ""}</p></form></Reveal></div></section>;
 }
 
 function Showcase() {
@@ -425,7 +475,7 @@ function Pricing() {
   return (
     <section id="pricing" className="section-space">
       <div className="container-site"><Reveal><SectionHeading eyebrow="Straightforward starting points" title="Invest in the system you need now." copy="Choose a focused package or start a conversation for a tailored product scope." centered /></Reveal>
-        <div className="pricing-grid">{plans.map((plan) => <Reveal key={plan.name} className={`pricing-card ${plan.popular ? "pricing-popular" : ""}`}>{plan.popular && <span className="popular-label">Most popular</span>}<h3>{plan.name}</h3><p>{plan.copy}</p><div className="plan-price"><strong>{plan.price}</strong><span>{plan.suffix}</span></div><ul>{plan.features.map(feature=><li key={feature}><CheckCircle2/>{feature}</li>)}</ul><Button variant={plan.popular ? "premium" : "glass"} size="premium" className="w-full" asChild><a href={checkoutUrl(plan.id)} className="lemonsqueezy-button">Choose {plan.name}<ArrowRight/></a></Button></Reveal>)}</div>
+        <div className="pricing-grid">{plans.map((plan) => <Reveal key={plan.name} className={`pricing-card ${plan.popular ? "pricing-popular" : ""}`}>{plan.popular && <span className="popular-label">Most popular</span>}<h3>{plan.name}</h3><p>{plan.copy}</p><div className="plan-price"><strong>{plan.price}</strong><span>{plan.suffix}</span></div><ul>{plan.features.map(feature=><li key={feature}><CheckCircle2/>{feature}</li>)}</ul><div className="plan-actions"><Button variant={plan.popular ? "premium" : "glass"} size="premium" className="w-full" asChild><a href={invoiceUrl(plan.name)} target="_blank" rel="noreferrer">Pay with Stripe / Get Invoice<ArrowRight/></a></Button><a href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle/>Chat on WhatsApp</a></div><p className="stripe-trust"><ShieldCheck/>Secure via Stripe · Official Invoice · 7-day Guarantee</p></Reveal>)}</div>
       </div>
     </section>
   );
@@ -464,5 +514,5 @@ function Footer() {
 }
 
 export function HomePage() {
-  return <div className="site-shell"><Header/><main><Hero/><LogoCloud/><About/><Services/><AIAutomation/><Products/><Showcase/><Pricing/><Testimonials/><FAQ/><Contact/></main><Footer/><a href={whatsappUrl} target="_blank" rel="noreferrer" className="floating-whatsapp" aria-label="Chat with LogicGridLab on WhatsApp"><MessageCircle/></a></div>;
+  return <div className="site-shell"><Header/><main><Hero/><LogoCloud/><About/><RealGallery/><Services/><AIAutomation/><Products/><FeaturedDirectories/><Showcase/><Pricing/><Testimonials/><FAQ/><Contact/></main><Footer/><a href={whatsappUrl} target="_blank" rel="noreferrer" className="floating-whatsapp" aria-label="Chat with LogicGridLab on WhatsApp"><MessageCircle/></a></div>;
 }
