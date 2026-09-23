@@ -379,7 +379,7 @@ function Services() {
           <div className="service-top"><span className="service-icon"><Icon /></span><span className="service-index">{service.index}</span>{service.hot && <span className="hot-badge">Hot</span>}</div>
           <p className="tile-kicker">{service.kicker}</p><h3>{service.title}</h3><p>{service.copy}</p>
           <ul>{service.features.map((feature) => <li key={feature}><Check />{feature}</li>)}</ul>
-          <div className="tile-footer"><strong>{service.price}</strong><a href="#contact" aria-label={`Discuss ${service.title}`}><ArrowUpRight /></a></div>
+          <div className="tile-footer"><strong>{service.price}</strong><div><a href={invoiceUrl(service.title)} target="_blank" rel="noreferrer">Pay with Stripe / Get Invoice</a><a href={whatsappUrl} target="_blank" rel="noreferrer" aria-label={`Chat about ${service.title}`}><MessageCircle /></a></div></div>
         </Reveal>})}</div>
       </div>
     </section>
@@ -510,7 +510,7 @@ function Contact() {
 }
 
 function Footer() {
-  return <footer><div className="container-site"><div className="footer-main"><div><Brand/><p>Premium software products, AI agents, and growth systems — built in Gujranwala, shipping worldwide.</p></div><div className="footer-columns"><nav><strong>Explore</strong><a href="#products">Products</a><a href="#services">Services</a><a href="#pricing">Pricing</a></nav><nav><strong>Company</strong><a href="#about">About Lab</a><a href="#contact">Contact</a><a href="mailto:info@logicgridlab.com">Email</a></nav><nav><strong>Legal</strong><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="https://etsy.com/shop/logicgridlab" target="_blank" rel="noreferrer">Etsy Shop</a></nav></div></div><div className="footer-bottom"><span>© 2026 LogicGridLab (Pvt) Ltd</span><span><i/>Lab systems operational</span><span>Gujranwala, Pakistan</span></div></div></footer>;
+  return <footer><div className="container-site"><div className="footer-main"><div><Brand/><p>Premium software products, AI agents, and growth systems — built in Gujranwala, shipping worldwide.</p></div><div className="footer-columns"><nav><strong>Explore</strong><a href="#products">Products</a><a href="#services">Services</a><a href="#pricing">Pricing</a></nav><nav><strong>Company</strong><a href="#about">About Lab</a><a href="#team">Our Team</a><a href="#contact">Contact</a><a href="mailto:info@logicgridlab.com">Email</a></nav><nav><strong>Legal</strong><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={etsyShopUrl} target="_blank" rel="noreferrer">Etsy Shop</a></nav></div></div><div className="footer-bottom"><span>© 2026 LogicGridLab (Pvt) Ltd</span><span><i/>Lab systems operational</span><span>Gujranwala, Pakistan</span></div></div></footer>;
 }
 
 export function HomePage() {
