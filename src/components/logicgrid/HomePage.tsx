@@ -496,15 +496,26 @@ function FAQ() {
 function Contact() {
   const [businessType, setBusinessType] = useState("");
   const [budget, setBudget] = useState("");
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const message = ["Hello LogicGridLab — I’d like to discuss a project.", "", `Name: ${String(form.get("name") ?? "")}`, `Business type: ${businessType}`, `Budget: ${budget}`, `Message: ${String(form.get("message") ?? "")}`].join("\n");
+    const name = String(form.get("name") ?? "");
+    const email = String(form.get("email") ?? "");
+    const phone = String(form.get("phone") ?? "");
+    const details = String(form.get("message") ?? "");
+    const message = ["Hello LogicGridLab — I’d like to discuss a project.", "", `Name: ${name}`, `Email: ${email}`, `Phone: ${phone}`, `Business type: ${businessType}`, `Budget: ${budget}`, `Message: ${details}`].join("\n");
     window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    await supabase.from("inquiries").insert({
+      name,
+      email,
+      phone: phone || null,
+      service_interest: [businessType, budget].filter(Boolean).join(" · ") || null,
+      message: details || null,
+    });
   };
   return (
     <section id="contact" className="section-space final-cta section-grid"><div className="container-site contact-layout"><Reveal><div className="contact-copy"><Eyebrow>Gujranwala HQ · Global Delivery</Eyebrow><h2>Let’s Build Your Growth Engine</h2><p>Tell us where the friction is. You’ll speak directly with the product team and leave with a practical next step.</p><div className="contact-proof"><span><Check/>Direct founder access</span><span><Check/>7–14 day delivery window</span><span><Check/>Global WhatsApp support</span></div><a href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle/><span><small>WhatsApp</small><strong>+92-341-4249678</strong></span></a></div></Reveal>
-      <Reveal><form onSubmit={submit} className="contact-form"><div className="field-grid"><label>Name<Input name="name" required placeholder="Your full name"/></label><label>Business type<Select value={businessType} onValueChange={setBusinessType} required><SelectTrigger><SelectValue placeholder="Select type"/></SelectTrigger><SelectContent>{["Etsy seller","Shopify brand","Startup","Local business","Agency"].map(item=><SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></label></div><label>Budget<Select value={budget} onValueChange={setBudget} required><SelectTrigger><SelectValue placeholder="Select budget"/></SelectTrigger><SelectContent>{["Under $500","$500–$1,500","$1,500–$5,000","$5,000+"].map(item=><SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></label><label>Message<Textarea name="message" required placeholder="What would you like to build, automate, or improve?"/></label><Button variant="premium" size="premium" className="w-full"><MessageCircle/>Send via WhatsApp<ArrowRight/></Button><p><ShieldCheck/>Private enquiry. No sales spam.</p></form></Reveal>
+      <Reveal><form onSubmit={submit} className="contact-form"><div className="field-grid"><label>Name<Input name="name" required placeholder="Your full name"/></label><label>Business type<Select value={businessType} onValueChange={setBusinessType} required><SelectTrigger><SelectValue placeholder="Select type"/></SelectTrigger><SelectContent>{["Etsy seller","Shopify brand","Startup","Local business","Agency"].map(item=><SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></label></div><div className="field-grid"><label>Email<Input name="email" type="email" required placeholder="you@company.com"/></label><label>WhatsApp / phone<Input name="phone" placeholder="+92 341 4249678"/></label></div><label>Budget<Select value={budget} onValueChange={setBudget} required><SelectTrigger><SelectValue placeholder="Select budget"/></SelectTrigger><SelectContent>{["Under $500","$500–$1,500","$1,500–$5,000","$5,000+"].map(item=><SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></label><label>Message<Textarea name="message" required placeholder="What would you like to build, automate, or improve?"/></label><Button variant="premium" size="premium" className="w-full"><MessageCircle/>Send via WhatsApp<ArrowRight/></Button><p><ShieldCheck/>Private enquiry. No sales spam.</p></form></Reveal>
     </div></section>
   );
 }
