@@ -58,7 +58,6 @@ export default function AdminDashboard({ email }: { email: string }) {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    supabase.rpc("has_role", { _user_id: "", _role: "admin" } as never).then(() => undefined);
     supabase.auth.getUser().then(async ({ data }) => {
       if (!data.user) { setIsAdmin(false); return; }
       const { data: roles } = await supabase
