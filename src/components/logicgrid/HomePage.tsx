@@ -22,16 +22,16 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import sirEjazAsset from "@/assets/Sir_Ejaz.webp.asset.json";
-import ejazAsset from "@/assets/Ejaz.webp.asset.json";
-import ceoAsset from "@/assets/ceo.webp.asset.json";
-import headsMeetingAsset from "@/assets/Heads_meeting.webp.asset.json";
-import leadsMeetingAsset from "@/assets/Leads_meeting.webp.asset.json";
-import clientMeetingAsset from "@/assets/Meeting_with_Lee.webp.asset.json";
-import annualMeetingAsset from "@/assets/Staff_Annual_Meeting.webp.asset.json";
-import awardsAsset from "@/assets/Awards.webp.asset.json";
-import groupPhotoAsset from "@/assets/Group_photo.webp.asset.json";
-import trademarkAsset from "@/assets/logicgrid-trademark.png.asset.json";
+import sirEjazAsset from "@/assets/sir-ejaz.jpg";
+import ejazAsset from "@/assets/ejaz.jpg";
+import ceoAsset from "@/assets/ceo.jpg";
+import headsMeetingAsset from "@/assets/Heads-meeting.jpg";
+import leadsMeetingAsset from "@/assets/leads-meeting.jpg";
+import clientMeetingAsset from "@/assets/meeting-with-Lee.jpg";
+import annualMeetingAsset from "@/assets/Staff-Annual-Meeting.jpg";
+import awardsAsset from "@/assets/Awards.jpg";
+import groupPhotoAsset from "@/assets/group-photo.jpg";
+import trademarkAsset from "@/assets/logicgrid-trademark.png";
 import {
   ArrowDown,
   ArrowRight,
@@ -260,7 +260,7 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
 function Brand() {
   return (
     <a href="#top" className="brand" aria-label="LogicGridLab home">
-      <img src={trademarkAsset.url} width={36} height={36} alt="LogicGridLab trademark" />
+      <img src={trademarkAsset} width={36} height={36} alt="LogicGridLab trademark" />
       <span>LogicGrid<span>Lab</span></span><i />
     </a>
   );
@@ -338,7 +338,7 @@ function Hero() {
             <Button variant="glass" size="premium" asChild><a href="#products">Explore Products <ArrowDown /></a></Button>
           </div>
           <div className="hero-proof"><div className="avatar-stack"><span>SM</span><span>AK</span><span>FS</span><span>DR</span></div><div><strong>Trusted by 500+ Businesses</strong><span><span className="stars">★★★★★</span> 5.0 worldwide rating</span></div></div>
-          <div className="hero-founder"><span className="hero-founder-ring"><img src={sirEjazAsset.url} alt="Ejaz Ahmed, founder of LogicGridLab" /></span><div><strong>Ejaz Ahmed</strong><small>Founder · Full-Stack Product Engineer</small></div></div>
+          <div className="hero-founder"><span className="hero-founder-ring"><img src={sirEjazAsset} alt="Ejaz Ahmed, founder of LogicGridLab" /></span><div><strong>Ejaz Ahmed</strong><small>Founder · Full-Stack Product Engineer</small></div></div>
         </div>
         <DashboardMockup />
       </div>
@@ -358,11 +358,11 @@ function About() {
         <Reveal><SectionHeading eyebrow="Inside LogicGridLab" title="Not Freelancers. A Dedicated Product Lab." copy="A focused product company combining senior engineering, commercial thinking, and direct founder access from Gujranwala to the world." /></Reveal>
         <div className="about-bento">
           <Reveal className="founder-card">
-            <img src={sirEjazAsset.url} loading="lazy" width={912} height={1172} alt="Ejaz Ahmed, founder of LogicGridLab" />
+            <img src={sirEjazAsset} loading="lazy" width={912} height={1172} alt="Ejaz Ahmed, founder of LogicGridLab" />
             <div className="founder-overlay"><div><span>Founder</span><h3>Ejaz Ahmed</h3><p>Full-Stack Product Engineer<br/>Etsy Automation Specialist</p></div><blockquote>“Our mission: Give small sellers the same analytics power big brands have.”</blockquote></div>
           </Reveal>
-          <Reveal className="office-card office-primary"><img src={ejazAsset.url} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed working at the CEO desk in Gujranwala HQ"/><div><span>Founder at work</span><strong>CEO Desk — Gujranwala HQ</strong></div></Reveal>
-          <Reveal className="office-card office-secondary"><img src={ceoAsset.url} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed signing documents at the CEO desk"/><div><span>Founder at work</span><strong>CEO Desk — Gujranwala HQ</strong></div></Reveal>
+          <Reveal className="office-card office-primary"><img src={ejazAsset} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed working at the CEO desk in Gujranwala HQ"/><div><span>Founder at work</span><strong>CEO Desk — Gujranwala HQ</strong></div></Reveal>
+          <Reveal className="office-card office-secondary"><img src={ceoAsset} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed signing documents at the CEO desk"/><div><span>Founder at work</span><strong>CEO Desk — Gujranwala HQ</strong></div></Reveal>
           <div className="about-stats">{stats.map(([number,label]) => <Reveal key={label} className="stat-card"><strong>{number}</strong><span>{label}</span></Reveal>)}</div>
         </div>
       </div>
@@ -419,13 +419,13 @@ function Products() {
 }
 
 const galleryItems = [
-  { src: ceoAsset.url, caption: "CEO Desk — Gujranwala HQ", className: "gallery-tall" },
-  { src: headsMeetingAsset.url, caption: "Leadership & Product Meetings", className: "gallery-tall" },
-  { src: leadsMeetingAsset.url, caption: "Leadership & Product Meetings", className: "gallery-wide" },
-  { src: clientMeetingAsset.url, caption: "Global Client Collaboration", className: "gallery-tall" },
-  { src: annualMeetingAsset.url, caption: "Team Culture — Annual Meeting", className: "gallery-tall" },
-  { src: awardsAsset.url, caption: "Team Culture & Awards", className: "gallery-tall" },
-  { src: groupPhotoAsset.url, caption: "The LogicGridLab Team", className: "gallery-wide" },
+  { src: ceoAsset, caption: "CEO Desk — Gujranwala HQ", className: "gallery-tall" },
+  { src: headsMeetingAsset, caption: "Leadership & Product Meetings", className: "gallery-tall" },
+  { src: leadsMeetingAsset, caption: "Leadership & Product Meetings", className: "gallery-wide" },
+  { src: clientMeetingAsset, caption: "Global Client Collaboration", className: "gallery-tall" },
+  { src: annualMeetingAsset, caption: "Team Culture — Annual Meeting", className: "gallery-tall" },
+  { src: awardsAsset, caption: "Team Culture & Awards", className: "gallery-tall" },
+  { src: groupPhotoAsset, caption: "The LogicGridLab Team", className: "gallery-wide" },
 ];
 
 function RealGallery() {
@@ -439,7 +439,7 @@ function RealGallery() {
   return <section id="team" className="section-space real-gallery-section"><div className="container-site">
     <Reveal><div className="gallery-heading"><SectionHeading eyebrow="Inside LogicGridLab — Real Team, Real Office" title="Not Stock Photos. Our Actual Lab." copy="A closer look at founder-led product work, leadership meetings, global collaboration, and the team culture behind every launch."/><Button variant="premium" size="premium" asChild><a href="#contact">Meet the team in Gujranwala <ArrowRight/></a></Button></div></Reveal>
     <div className="masonry-gallery">{galleryItems.map((item, index) => <Reveal key={`${item.caption}-${index}`} className={`gallery-item ${item.className}`}><button type="button" onClick={() => setSelected(item)} aria-label={`Open ${item.caption}`}><img src={item.src} loading="lazy" alt={item.caption}/><span><small>{item.caption}</small><Maximize2/></span></button></Reveal>)}</div>
-    <div className="culture-strip" aria-label="Team Culture and Awards"><figure><img src={annualMeetingAsset.url} loading="lazy" alt="LogicGridLab annual staff meeting"/><figcaption>Annual Meeting</figcaption></figure><figure><img src={awardsAsset.url} loading="lazy" alt="LogicGridLab team awards"/><figcaption>Team Awards</figcaption></figure><figure><img src={groupPhotoAsset.url} loading="lazy" alt="LogicGridLab group photo"/><figcaption>Our Team</figcaption></figure></div>
+    <div className="culture-strip" aria-label="Team Culture and Awards"><figure><img src={annualMeetingAsset} loading="lazy" alt="LogicGridLab annual staff meeting"/><figcaption>Annual Meeting</figcaption></figure><figure><img src={awardsAsset} loading="lazy" alt="LogicGridLab team awards"/><figcaption>Team Awards</figcaption></figure><figure><img src={groupPhotoAsset} loading="lazy" alt="LogicGridLab group photo"/><figcaption>Our Team</figcaption></figure></div>
   </div>{selected && <div className="lightbox" role="dialog" aria-modal="true" aria-label={selected.caption} onClick={() => setSelected(null)}><Button variant="glass" size="icon" onClick={() => setSelected(null)} aria-label="Close image"><X/></Button><figure onClick={(event) => event.stopPropagation()}><img src={selected.src} alt={selected.caption}/><figcaption>{selected.caption}</figcaption></figure></div>}</section>;
 }
 
