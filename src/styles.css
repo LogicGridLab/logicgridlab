@@ -197,7 +197,7 @@
   .founder-linkedin { display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--border); border-radius: .5rem; color: var(--primary-soft); transition: border-color .2s; }
   .founder-linkedin:hover { border-color: var(--primary); }
   .founder-linkedin svg { width: .95rem; height: .95rem; }
-  .dashboard-window { inset: 8% -4% 7% 1%; transform: none; border-color: color-mix(in oklab, var(--foreground) 12%, transparent); box-shadow: 0 25px 50px -12px oklch(0 0 0 / .6); }
+  .dashboard-window { inset: 8% 0 7% 1%; transform: none; border-color: color-mix(in oklab, var(--foreground) 12%, transparent); box-shadow: 0 25px 50px -12px oklch(0 0 0 / .6); }
   .browser-bar { display: flex; align-items: center; gap: 1rem; padding: .6rem .9rem; border-bottom: 1px solid var(--border); background: var(--deep); }
   .browser-dots { display: flex; gap: .4rem; }
   .browser-dots i { width: .6rem; height: .6rem; border-radius: 50%; background: oklch(.66 .2 25); }
