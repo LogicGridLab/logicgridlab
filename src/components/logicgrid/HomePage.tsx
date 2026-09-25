@@ -1,3 +1,5 @@
+import { SiNextdotjs, SiReact, SiTypescript, SiSupabase, SiCloudflare, SiStripe } from "react-icons/si";
+import { RiOpenaiFill, RiLinkedinFill } from "react-icons/ri";
 import {
   Accordion,
   AccordionContent,
@@ -239,6 +241,12 @@ const faqs = [
   ["Will an AI agent replace my team?", "The goal is to remove repetitive response and qualification work. Your team stays in control while the agent handles routine conversations and routes important cases."],
 ];
 
+const linkedinUrl = "https://www.linkedin.com/company/logicgridlab";
+const techStack = [
+  { name: "Next.js", Icon: SiNextdotjs }, { name: "React", Icon: SiReact }, { name: "TypeScript", Icon: SiTypescript },
+  { name: "Supabase", Icon: SiSupabase }, { name: "Cloudflare", Icon: SiCloudflare }, { name: "OpenAI", Icon: RiOpenaiFill }, { name: "Stripe", Icon: SiStripe },
+];
+
 function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -260,7 +268,7 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
 function Brand() {
   return (
     <a href="#top" className="brand" aria-label="LogicGridLab home">
-      <img src={trademarkAsset} width={36} height={36} alt="LogicGridLab trademark" />
+      <span className="brand-mark"><img src={trademarkAsset} width={72} height={72} alt="LogicGridLab logo" /></span>
       <span>LogicGrid<span>Lab</span></span><i />
     </a>
   );
@@ -304,7 +312,7 @@ function DashboardMockup() {
     <div className="dashboard-stage" aria-label="EtsyOps analytics dashboard preview">
       <div className="dashboard-glow" />
       <div className="dashboard-window">
-        <div className="dashboard-topbar"><div className="mini-brand"><span>LG</span><strong>EtsyOps</strong></div><div className="window-dots"><i /><i /><i /></div></div>
+        <div className="browser-bar"><div className="browser-dots"><i /><i /><i /></div><div className="browser-url"><ShieldCheck />etsyops.logicgridlab.com/dashboard</div></div><div className="dashboard-topbar"><div className="mini-brand"><span>LG</span><strong>EtsyOps</strong></div></div>
         <div className="dashboard-body">
           <aside><span className="active"><BarChart3 />Overview</span><span><ShoppingBag />Orders</span><span><TrendingUp />Profit</span><span><Layers3 />Listings</span></aside>
           <div className="dashboard-main">
@@ -318,9 +326,6 @@ function DashboardMockup() {
           </div>
         </div>
       </div>
-      <div className="float-stat float-stat-one"><ShieldCheck /><span><strong>99.9%</strong><small>Uptime</small></span></div>
-      <div className="float-stat float-stat-two"><Zap /><span><strong>10+</strong><small>Apps shipped</small></span></div>
-      <div className="float-stat float-stat-three"><Headphones /><span><strong>24/7</strong><small>Support</small></span></div>
     </div>
   );
 }
@@ -330,15 +335,15 @@ function Hero() {
     <section id="top" className="hero section-grid">
       <div className="container-site hero-grid-layout">
         <div className="hero-copy">
-          <div className="live-pill"><i />Live: Building AI Voice Agents for SMEs</div>
-          <h1>We Build WebApps, SaaS & AI Automation That <span>Print Revenue.</span></h1>
-          <p>LogicGridLab is a Gujranwala-based product lab crafting high-performance SaaS, converting websites, and 24/7 AI automation for Etsy sellers, Shopify brands, and startups worldwide. We ship in 7–14 days, not months.</p>
+          <div className="live-pill"><i />Gujranwala HQ • Serving 15+ Countries • Since 2021</div>
+          <h1>We Build WebApps, SaaS & AI Automation <span className="hero-sub-head">That Print Revenue.</span></h1>
+          <p>We transform Etsy sellers, Shopify brands and startups into high-converting products. 7-day MVP delivery, lifetime support, no agency fluff.</p>
           <div className="hero-actions">
-            <Button variant="premium" size="premium" asChild><a href={whatsappUrl} target="_blank" rel="noreferrer">Get Started on WhatsApp <ArrowUpRight /></a></Button>
-            <Button variant="glass" size="premium" asChild><a href="#products">Explore Products <ArrowDown /></a></Button>
+            <Button variant="premium" size="premium" className="cta-whatsapp" asChild><a href={whatsappUrl} target="_blank" rel="noreferrer">Book Free Strategy Call → WhatsApp</a></Button>
+            <Button variant="glass" size="premium" asChild><a href="#products">See Our Products <ArrowDown /></a></Button>
           </div>
-          <div className="hero-proof"><div className="avatar-stack"><span>SM</span><span>AK</span><span>FS</span><span>DR</span></div><div><strong>Trusted by 500+ Businesses</strong><span><span className="stars">★★★★★</span> 5.0 worldwide rating</span></div></div>
-          <div className="hero-founder"><span className="hero-founder-ring"><img src={sirEjazAsset} alt="Ejaz Ahmed, founder of LogicGridLab" /></span><div><strong>Ejaz Ahmed</strong><small>Founder · Full-Stack Product Engineer</small></div></div>
+          <div className="stack-proof"><small>Built with modern stack</small><div>{techStack.map(({ name, Icon }) => <span key={name} title={name}><Icon aria-hidden="true" />{name}</span>)}</div></div>
+          <div className="hero-founder"><span className="hero-founder-ring"><img src={sirEjazAsset} width={112} height={112} alt="Ejaz Ahmed, founder of LogicGridLab" /></span><div><strong>Ejaz Ahmed</strong><small>Founder · Full-Stack Product Engineer</small></div><a className="founder-linkedin" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="Ejaz Ahmed on LinkedIn"><RiLinkedinFill /></a></div>
         </div>
         <DashboardMockup />
       </div>
@@ -483,8 +488,8 @@ function Pricing() {
 
 function Testimonials() {
   return (
-    <section className="section-space testimonial-section"><div className="container-site testimonial-layout"><Reveal><div><Eyebrow>Client signal</Eyebrow><h2>Trusted by people who build and sell.</h2><div className="google-rating"><Globe2/><div><strong>Google 5.0</strong><span className="stars">★★★★★</span></div></div></div></Reveal>
-      <Reveal><Carousel opts={{loop:true}} className="testimonial-carousel"><CarouselContent>{testimonials.map((item)=><CarouselItem key={item.name}><article className="testimonial-card"><div className="stars">★★★★★</div><blockquote>“{item.quote}”</blockquote><div><span>{item.name.slice(0,1)}</span><p><strong>{item.name}</strong><small>{item.role}</small></p></div></article></CarouselItem>)}</CarouselContent><div className="carousel-buttons"><CarouselPrevious variant="glass"/><CarouselNext variant="glass"/></div></Carousel></Reveal>
+    <section className="section-space testimonial-section"><div className="container-site testimonial-layout"><Reveal><div><Eyebrow>Client signal</Eyebrow><h2>Trusted by people who build and sell.</h2><div className="google-rating"><Globe2/><div><strong>Google 5.0</strong><span className="stars">5.0</span></div></div></div></Reveal>
+      <Reveal><Carousel opts={{loop:true}} className="testimonial-carousel"><CarouselContent>{testimonials.map((item)=><CarouselItem key={item.name}><article className="testimonial-card"><div className="stars">5.0</div><blockquote>“{item.quote}”</blockquote><div><span>{item.name.slice(0,1)}</span><p><strong>{item.name}</strong><small>{item.role}</small></p></div></article></CarouselItem>)}</CarouselContent><div className="carousel-buttons"><CarouselPrevious variant="glass"/><CarouselNext variant="glass"/></div></Carousel></Reveal>
     </div></section>
   );
 }
@@ -521,7 +526,7 @@ function Contact() {
 }
 
 function Footer() {
-  return <footer><div className="container-site"><div className="footer-main"><div><Brand/><p>Premium software products, AI agents, and growth systems — built in Gujranwala, shipping worldwide.</p></div><div className="footer-columns"><nav><strong>Explore</strong><a href="#products">Products</a><a href="#services">Services</a><a href="#pricing">Pricing</a></nav><nav><strong>Company</strong><a href="#about">About Lab</a><a href="#team">Our Team</a><a href="#contact">Contact</a><a href="mailto:info@logicgridlab.com">Email</a></nav><nav><strong>Legal</strong><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={etsyShopUrl} target="_blank" rel="noreferrer">Etsy Shop</a></nav></div></div><div className="footer-bottom"><span>© 2026 LogicGridLab (Pvt) Ltd</span><span><i/>Lab systems operational</span><span>Gujranwala, Pakistan</span></div></div></footer>;
+  return <footer><div className="container-site"><div className="footer-main"><div><Brand/><p>Premium software products, AI agents, and growth systems — built in Gujranwala, shipping worldwide.</p></div><div className="footer-columns"><nav><strong>Explore</strong><a href="#products">Products</a><a href="#services">Services</a><a href="#pricing">Pricing</a></nav><nav><strong>Company</strong><a href="#about">About Lab</a><a href="#team">Our Team</a><a href="#contact">Contact</a><a href="mailto:logicgridlab@gmail.com">Email</a></nav><nav><strong>Legal</strong><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={etsyShopUrl} target="_blank" rel="noreferrer">Etsy Shop</a></nav></div></div><div className="footer-bottom"><span>Gujranwala, Punjab, Pakistan</span><a href="mailto:logicgridlab@gmail.com">logicgridlab@gmail.com</a><span>© 2026 LogicGridLab</span></div></div></footer>;
 }
 
 export function HomePage() {

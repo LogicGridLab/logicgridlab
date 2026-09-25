@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HomePage } from "@/components/logicgrid/HomePage";
 
-const title = "LogicGridLab — Premium SaaS Lab | WebApps, AI Agents & Website Growth";
+const title = "LogicGridLab - SaaS & AI Automation Lab from Pakistan";
 const description = "LogicGridLab is a premium software product lab in Gujranwala building SaaS, high-performance websites, AI voice agents, and automation for businesses worldwide.";
 
 export const Route = createFileRoute("/")({
