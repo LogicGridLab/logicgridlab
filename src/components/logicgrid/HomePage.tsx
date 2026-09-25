@@ -1,4 +1,5 @@
-import { SiNextdotjs, SiReact, SiTypescript, SiSupabase, SiCloudflare, SiOpenai, SiStripe, SiLinkedin } from "react-icons/si";
+import { SiNextdotjs, SiReact, SiTypescript, SiSupabase, SiCloudflare, SiStripe } from "react-icons/si";
+import { RiOpenaiFill, RiLinkedinFill } from "react-icons/ri";
 import {
   Accordion,
   AccordionContent,
@@ -243,7 +244,7 @@ const faqs = [
 const linkedinUrl = "https://www.linkedin.com/company/logicgridlab";
 const techStack = [
   { name: "Next.js", Icon: SiNextdotjs }, { name: "React", Icon: SiReact }, { name: "TypeScript", Icon: SiTypescript },
-  { name: "Supabase", Icon: SiSupabase }, { name: "Cloudflare", Icon: SiCloudflare }, { name: "OpenAI", Icon: SiOpenai }, { name: "Stripe", Icon: SiStripe },
+  { name: "Supabase", Icon: SiSupabase }, { name: "Cloudflare", Icon: SiCloudflare }, { name: "OpenAI", Icon: RiOpenaiFill }, { name: "Stripe", Icon: SiStripe },
 ];
 
 function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -342,7 +343,7 @@ function Hero() {
             <Button variant="glass" size="premium" asChild><a href="#products">See Our Products <ArrowDown /></a></Button>
           </div>
           <div className="stack-proof"><small>Built with modern stack</small><div>{techStack.map(({ name, Icon }) => <span key={name} title={name}><Icon aria-hidden="true" />{name}</span>)}</div></div>
-          <div className="hero-founder"><span className="hero-founder-ring"><img src={sirEjazAsset} alt="Ejaz Ahmed, founder of LogicGridLab" /></span><div><strong>Ejaz Ahmed</strong><small>Founder · Full-Stack Product Engineer</small></div><a className="founder-linkedin" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="Ejaz Ahmed on LinkedIn"><SiLinkedin /></a></div>
+          <div className="hero-founder"><span className="hero-founder-ring"><img src={sirEjazAsset} width={112} height={112} alt="Ejaz Ahmed, founder of LogicGridLab" /></span><div><strong>Ejaz Ahmed</strong><small>Founder · Full-Stack Product Engineer</small></div><a className="founder-linkedin" href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="Ejaz Ahmed on LinkedIn"><RiLinkedinFill /></a></div>
         </div>
         <DashboardMockup />
       </div>
