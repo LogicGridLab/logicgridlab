@@ -125,6 +125,116 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          customer_email: string
+          customer_name: string
+          id: string
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          payment_reference: string | null
+          payment_status: Database["public"]["Enums"]["payment_status"]
+          product_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          customer_email: string
+          customer_name: string
+          id?: string
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          payment_reference?: string | null
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          product_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          customer_email?: string
+          customer_name?: string
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          payment_reference?: string | null
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          product_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          billing_type: Database["public"]["Enums"]["billing_type"]
+          cover_image_url: string | null
+          created_at: string
+          currency: string
+          demo_url: string | null
+          description: string | null
+          downloadable_file_url: string | null
+          external_access_url: string | null
+          features: string[]
+          id: string
+          price: number
+          short_tagline: string | null
+          slug: string
+          sort_order: number
+          status: Database["public"]["Enums"]["product_status"]
+          title: string
+          type: Database["public"]["Enums"]["product_type"]
+          updated_at: string
+        }
+        Insert: {
+          billing_type?: Database["public"]["Enums"]["billing_type"]
+          cover_image_url?: string | null
+          created_at?: string
+          currency?: string
+          demo_url?: string | null
+          description?: string | null
+          downloadable_file_url?: string | null
+          external_access_url?: string | null
+          features?: string[]
+          id?: string
+          price?: number
+          short_tagline?: string | null
+          slug: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["product_status"]
+          title: string
+          type?: Database["public"]["Enums"]["product_type"]
+          updated_at?: string
+        }
+        Update: {
+          billing_type?: Database["public"]["Enums"]["billing_type"]
+          cover_image_url?: string | null
+          created_at?: string
+          currency?: string
+          demo_url?: string | null
+          description?: string | null
+          downloadable_file_url?: string | null
+          external_access_url?: string | null
+          features?: string[]
+          id?: string
+          price?: number
+          short_tagline?: string | null
+          slug?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["product_status"]
+          title?: string
+          type?: Database["public"]["Enums"]["product_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       subscribers: {
         Row: {
           created_at: string
@@ -191,7 +301,16 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      billing_type: "one-time" | "monthly" | "yearly"
       inquiry_status: "new" | "contacted" | "closed"
+      payment_method: "payoneer" | "card" | "bank_transfer"
+      payment_status: "pending_verification" | "paid" | "failed" | "refunded"
+      product_status: "draft" | "published" | "archived"
+      product_type:
+        | "digital_file"
+        | "saas_access"
+        | "webapp_tool"
+        | "spreadsheet"
       subscription_status: "active" | "canceled" | "past_due"
     }
     CompositeTypes: {
@@ -321,7 +440,17 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      billing_type: ["one-time", "monthly", "yearly"],
       inquiry_status: ["new", "contacted", "closed"],
+      payment_method: ["payoneer", "card", "bank_transfer"],
+      payment_status: ["pending_verification", "paid", "failed", "refunded"],
+      product_status: ["draft", "published", "archived"],
+      product_type: [
+        "digital_file",
+        "saas_access",
+        "webapp_tool",
+        "spreadsheet",
+      ],
       subscription_status: ["active", "canceled", "past_due"],
     },
   },
