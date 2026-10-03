@@ -6,6 +6,8 @@ import {
   CreditCard, Mail, MessageCircle, Loader2, ShieldCheck, Trash2, Pencil,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { ProductsView, OrdersView } from "./StoreAdmin";
+import { Package, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -35,6 +37,8 @@ type ChatLog = {
 
 const NAV = [
   { key: "overview", label: "Overview / Metrics", icon: BarChart3 },
+  { key: "products", label: "Products", icon: Package },
+  { key: "orders", label: "Orders & Payments", icon: Receipt },
   { key: "inquiries", label: "Leads & Inquiries", icon: Inbox },
   { key: "subscriptions", label: "Subscriptions", icon: CreditCard },
   { key: "knowledge", label: "Chatbot Training", icon: Bot },
@@ -148,6 +152,8 @@ export default function AdminDashboard({ email }: { email: string }) {
         </header>
         <main className="space-y-6 p-5">
           {view === "overview" && <Overview onNavigate={setView} />}
+          {view === "products" && <ProductsView />}
+          {view === "orders" && <OrdersView />}
           {view === "inquiries" && <Inquiries />}
           {view === "subscriptions" && <Subscriptions />}
           {view === "knowledge" && <KnowledgeCenter />}

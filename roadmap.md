@@ -10,3 +10,7 @@
 - [x] Admin dashboard at /admin with sign-in, role check, leads, subscriptions, chatbot training, chat logs, settings
 - [x] Contact form saves leads into the dashboard
 - [ ] Add real Stripe Payment Link URLs when available
+- [x] Product manager (add/edit/upload/duplicate/publish) and Orders tab in /admin
+- [x] Homepage products load from the product manager with Payoneer checkout + order status page
+- [ ] Card payments — blocked: built-in payments need a paid Lovable plan
+- [ ] Receipt emails — blocked: sender domain setup for logicgridlab.com

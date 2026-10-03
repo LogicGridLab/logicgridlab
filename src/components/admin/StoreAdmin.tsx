@@ -174,10 +174,10 @@ function EditorForm({ initial, onClose, onSaved }: { initial: Partial<Product>; 
     setUploading(null);
   }
 
-  async function save(e: FormEvent) {
+  async function save(e: FormEvent): Promise<void> {
     e.preventDefault();
-    if (!p.title?.trim() || !p.slug?.trim()) return toast.error("Title and slug are required");
-    if (Number(p.price) < 0 || Number.isNaN(Number(p.price))) return toast.error("Enter a valid price");
+    if (!p.title?.trim() || !p.slug?.trim()) { toast.error("Title and slug are required"); return; }
+    if (Number(p.price) < 0 || Number.isNaN(Number(p.price))) { toast.error("Enter a valid price"); return; }
     setSaving(true);
     const payload = {
       title: p.title.trim(), slug: slugify(p.slug), type: p.type!, price: Number(p.price), currency: (p.currency || "USD").toUpperCase().slice(0, 3),
@@ -187,7 +187,7 @@ function EditorForm({ initial, onClose, onSaved }: { initial: Partial<Product>; 
     };
     const { error } = p.id ? await supabase.from("products").update(payload).eq("id", p.id) : await supabase.from("products").insert(payload);
     setSaving(false);
-    if (error) return toast.error(error.code === "23505" ? "That slug is already used" : "Could not save product");
+    if (error) { toast.error(error.code === "23505" ? "That slug is already used" : "Could not save product"); return; }
     toast.success("Product saved");
     onSaved(); onClose();
   }
@@ -199,11 +199,11 @@ function EditorForm({ initial, onClose, onSaved }: { initial: Partial<Product>; 
       <div className="grid gap-3 sm:grid-cols-2">
         <Input placeholder="Title" value={p.title ?? ""} maxLength={120} onChange={(e) => { set("title", e.target.value); if (!slugTouched) set("slug", slugify(e.target.value)); }} aria-label="Title" />
         <Input placeholder="slug" value={p.slug ?? ""} onChange={(e) => { setSlugTouched(true); set("slug", e.target.value); }} aria-label="Slug" />
-        <Select value={p.type} onValueChange={(v) => set("type", v as ProductType)}>
+        <Select value={p.type ?? "webapp_tool"} onValueChange={(v) => set("type", v as ProductType)}>
           <SelectTrigger><SelectValue /></SelectTrigger>
           <SelectContent>{Object.entries(TYPE_LABEL).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent>
         </Select>
-        <Select value={p.status} onValueChange={(v) => set("status", v as Product["status"])}>
+        <Select value={p.status ?? "draft"} onValueChange={(v) => set("status", v as Product["status"])}>
           <SelectTrigger><SelectValue /></SelectTrigger>
           <SelectContent>{["draft", "published", "archived"].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
         </Select>
@@ -215,7 +215,7 @@ function EditorForm({ initial, onClose, onSaved }: { initial: Partial<Product>; 
           <Switch checked={subscription} onCheckedChange={(on) => set("billing_type", on ? "monthly" : "one-time")} aria-label="Subscription" />
           <span className="text-sm">{subscription ? "Subscription" : "One-time"}</span>
           {subscription && (
-            <Select value={p.billing_type} onValueChange={(v) => set("billing_type", v as Product["billing_type"])}>
+            <Select value={p.billing_type ?? "monthly"} onValueChange={(v) => set("billing_type", v as Product["billing_type"])}>
               <SelectTrigger className="h-8 w-28"><SelectValue /></SelectTrigger>
               <SelectContent><SelectItem value="monthly">Monthly</SelectItem><SelectItem value="yearly">Yearly</SelectItem></SelectContent>
             </Select>
@@ -236,7 +236,7 @@ function EditorForm({ initial, onClose, onSaved }: { initial: Partial<Product>; 
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <DropZone label="Drop cover image or click" icon={ImagePlus} accept="image/*" busy={uploading === "cover"} onFile={(f) => upload("cover", f)} current={p.cover_image_url ? "Cover uploaded" : null} />
-        <DropZone label="Drop digital file (.xlsx, .zip, .pdf)" icon={FileUp} accept=".xlsx,.xls,.csv,.zip,.pdf,.docx" busy={uploading === "file"} onFile={(f) => upload("file", f)} current={p.downloadable_file_url} />
+        <DropZone label="Drop digital file (.xlsx, .zip, .pdf)" icon={FileUp} accept=".xlsx,.xls,.csv,.zip,.pdf,.docx" busy={uploading === "file"} onFile={(f) => upload("file", f)} current={p.downloadable_file_url ?? null} />
       </div>
       {needsUrl && <Input placeholder="External access URL (https://app...)" value={p.external_access_url ?? ""} onChange={(e) => set("external_access_url", e.target.value)} aria-label="External access URL" />}
       <Input placeholder="Public demo URL (optional)" value={p.demo_url ?? ""} onChange={(e) => set("demo_url", e.target.value)} aria-label="Demo URL" />

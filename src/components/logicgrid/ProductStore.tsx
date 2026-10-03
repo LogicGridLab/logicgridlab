@@ -36,11 +36,7 @@ export default function ProductStore() {
     <section id="products" className="section-space">
       <div className="container-site">
         <div className="section-heading-row">
-          <div>
-            <span className="eyebrow">Products Store</span>
-            <h2 className="section-title">Live Products & Roadmap</h2>
-            <p className="section-copy">Buy instantly and get access the moment your payment is confirmed.</p>
-          </div>
+          <div className="section-heading"><p className="eyebrow"><span />Products Store</p><h2>Live Products & Roadmap</h2><p>Buy instantly and get access the moment your payment is confirmed.</p></div>
           <div className="secure-checkout"><ShieldCheck /><span><strong>Secure checkout</strong><small>Card · Payoneer · Instant delivery</small></span></div>
         </div>
         {isLoading ? (
