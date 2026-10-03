@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import ProductStore from "./ProductStore";
 import { supabase } from "@/integrations/supabase/client";
 import sirEjazAsset from "@/assets/sir-ejaz.jpg";
 import ejazAsset from "@/assets/ejaz.jpg";
@@ -407,20 +408,7 @@ function AIAutomation() {
 }
 
 function Products() {
-  return (
-    <section id="products" className="section-space">
-      <div className="container-site">
-        <Reveal><div className="section-heading-row"><SectionHeading eyebrow="Products Store" title="Live Products & Roadmap" copy="Explore every product on its own subdomain. EtsyOps is available through our official Etsy shop."/><div className="secure-checkout"><ShoppingBag/><span><strong>Etsy 5.0 rating</strong><small>500+ sales · Lifetime access</small></span></div></div></Reveal>
-        <div className="product-grid">{products.map((product) => <Reveal key={product.name} className={`product-tile ${product.featured ? "product-featured" : ""}`}>
-          <div className="product-head"><span>{product.number}</span><i>{product.status}</i></div>
-          <p className="tile-kicker">{product.category}</p><h3>{product.name}</h3><p>{product.copy}</p>
-          <div className="product-metric"><TrendingUp/><span>{product.metric}</span></div>
-          <div className="product-bottom"><div><strong>{product.price}</strong><span>{product.cadence}</span></div><div className="product-buttons">{product.app && <Button variant="glass" asChild><a href={product.app} target="_blank" rel="noreferrer" aria-label={`Open ${product.name}`}><Play/>Live Demo</a></Button>}{product.featured ? <Button variant="premium" asChild><a href={etsyShopUrl} target="_blank" rel="noreferrer">Buy on Etsy — $39 Lifetime <ArrowRight/></a></Button> : <Button variant="premium" asChild><a href={`${whatsappUrl}?text=${encodeURIComponent(`Hi LogicGridLab, notify me when ${product.name} launches.`)}`} target="_blank" rel="noreferrer">Join Early Access <ArrowRight/></a></Button>}</div></div>
-        </Reveal>)}</div>
-        <p className="checkout-trust"><ShoppingBag/>Etsy 5.0 rating <span/> 500+ sales <span/> Lifetime updates</p>
-      </div>
-    </section>
-  );
+  return <ProductStore />;
 }
 
 const galleryItems = [
