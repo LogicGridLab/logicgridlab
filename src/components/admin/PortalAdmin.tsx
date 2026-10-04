@@ -171,7 +171,7 @@ export function ListingsView() {
           <DialogHeader><DialogTitle>{edit.id ? "Edit listing" : "Add listing"}</DialogTitle></DialogHeader>
           <form onSubmit={save} className="space-y-3">
             <Pick value={edit.product_id ?? ""} onChange={(v) => setEdit({ ...edit, product_id: v })} options={(products.data ?? []).map((p) => ({ value: p.id, label: p.title }))} />
-            <Pick value={edit.platform ?? "etsy"} onChange={(v) => setEdit({ ...edit, platform: v })} options={PLATFORMS.map((p) => ({ value: p, label: PLATFORM_LABEL[p] }))} />
+            <Pick value={edit.platform ?? "etsy"} onChange={(v) => setEdit({ ...edit, platform: v })} options={PLATFORMS.map((p) => ({ value: p, label: PLATFORM_LABEL[p] ?? p }))} />
             <Input required type="url" placeholder="https://…" value={edit.listing_url ?? ""} onChange={(e) => setEdit({ ...edit, listing_url: e.target.value })} />
             <div className="grid grid-cols-2 gap-3">
               <Input type="number" min={0} placeholder="Views" value={edit.views ?? ""} onChange={(e) => setEdit({ ...edit, views: Number(e.target.value) })} />
@@ -249,7 +249,7 @@ export function SalesView() {
             <Pick value={form.product_id} onChange={(v) => setForm({ ...form, product_id: v })} options={(products.data ?? []).map((p) => ({ value: p.id, label: p.title }))} />
             <Input required type="email" placeholder="Customer email" value={form.customer_email} onChange={(e) => setForm({ ...form, customer_email: e.target.value })} />
             <Input required type="number" min={0} step="0.01" placeholder="Amount (USD)" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
-            <Pick value={form.platform} onChange={(v) => setForm({ ...form, platform: v })} options={["etsy", "shopify", "direct", "payoneer", "stripe"].map((p) => ({ value: p, label: PLATFORM_LABEL[p] }))} />
+            <Pick value={form.platform} onChange={(v) => setForm({ ...form, platform: v })} options={["etsy", "shopify", "direct", "payoneer", "stripe"].map((p) => ({ value: p, label: PLATFORM_LABEL[p] ?? p }))} />
             <Button type="submit" className="w-full" disabled={write.isPending}>{write.isPending && <Loader2 className="animate-spin" />}Save sale</Button>
           </form>
         </DialogContent>
