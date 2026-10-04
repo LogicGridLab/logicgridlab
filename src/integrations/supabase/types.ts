@@ -92,6 +92,39 @@ export type Database = {
         }
         Relationships: []
       }
+      edit_requests: {
+        Row: {
+          budget: number | null
+          client_name: string
+          created_at: string
+          description: string | null
+          id: string
+          status: string
+          task_type: string
+          website_url: string | null
+        }
+        Insert: {
+          budget?: number | null
+          client_name: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          status?: string
+          task_type?: string
+          website_url?: string | null
+        }
+        Update: {
+          budget?: number | null
+          client_name?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          status?: string
+          task_type?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       inquiries: {
         Row: {
           created_at: string
@@ -124,6 +157,47 @@ export type Database = {
           status?: Database["public"]["Enums"]["inquiry_status"]
         }
         Relationships: []
+      }
+      listings: {
+        Row: {
+          clicks: number
+          created_at: string
+          id: string
+          listing_url: string
+          platform: string
+          product_id: string | null
+          status: string
+          views: number
+        }
+        Insert: {
+          clicks?: number
+          created_at?: string
+          id?: string
+          listing_url: string
+          platform?: string
+          product_id?: string | null
+          status?: string
+          views?: number
+        }
+        Update: {
+          clicks?: number
+          created_at?: string
+          id?: string
+          listing_url?: string
+          platform?: string
+          product_id?: string | null
+          status?: string
+          views?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "listings_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       orders: {
         Row: {
@@ -174,66 +248,119 @@ export type Database = {
       }
       products: {
         Row: {
+          badge: string | null
           billing_type: Database["public"]["Enums"]["billing_type"]
+          compare_price: number | null
           cover_image_url: string | null
           created_at: string
           currency: string
           demo_url: string | null
           description: string | null
           downloadable_file_url: string | null
+          etsy_url: string | null
           external_access_url: string | null
           features: string[]
           id: string
           price: number
+          sales_count: number
           short_tagline: string | null
           slug: string
           sort_order: number
           status: Database["public"]["Enums"]["product_status"]
+          stripe_url: string | null
           title: string
           type: Database["public"]["Enums"]["product_type"]
           updated_at: string
         }
         Insert: {
+          badge?: string | null
           billing_type?: Database["public"]["Enums"]["billing_type"]
+          compare_price?: number | null
           cover_image_url?: string | null
           created_at?: string
           currency?: string
           demo_url?: string | null
           description?: string | null
           downloadable_file_url?: string | null
+          etsy_url?: string | null
           external_access_url?: string | null
           features?: string[]
           id?: string
           price?: number
+          sales_count?: number
           short_tagline?: string | null
           slug: string
           sort_order?: number
           status?: Database["public"]["Enums"]["product_status"]
+          stripe_url?: string | null
           title: string
           type?: Database["public"]["Enums"]["product_type"]
           updated_at?: string
         }
         Update: {
+          badge?: string | null
           billing_type?: Database["public"]["Enums"]["billing_type"]
+          compare_price?: number | null
           cover_image_url?: string | null
           created_at?: string
           currency?: string
           demo_url?: string | null
           description?: string | null
           downloadable_file_url?: string | null
+          etsy_url?: string | null
           external_access_url?: string | null
           features?: string[]
           id?: string
           price?: number
+          sales_count?: number
           short_tagline?: string | null
           slug?: string
           sort_order?: number
           status?: Database["public"]["Enums"]["product_status"]
+          stripe_url?: string | null
           title?: string
           type?: Database["public"]["Enums"]["product_type"]
           updated_at?: string
         }
         Relationships: []
+      }
+      sales: {
+        Row: {
+          amount: number
+          customer_email: string
+          date: string
+          id: string
+          platform: string
+          product_id: string | null
+          status: string
+        }
+        Insert: {
+          amount?: number
+          customer_email: string
+          date?: string
+          id?: string
+          platform?: string
+          product_id?: string | null
+          status?: string
+        }
+        Update: {
+          amount?: number
+          customer_email?: string
+          date?: string
+          id?: string
+          platform?: string
+          product_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       subscribers: {
         Row: {
