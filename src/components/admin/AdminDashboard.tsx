@@ -66,13 +66,18 @@ export default function AdminDashboard({ email }: { email: string }) {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    supabase.auth.getUser().then(async ({ data }) => {
-      if (!data.user) { setIsAdmin(false); return; }
-      const { data: roles } = await supabase
-        .from("user_roles").select("role").eq("user_id", data.user.id).eq("role", "admin");
-      src/components/Admin
-    });
-  }, []);
+  const check = async () => {
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) {
+      setIsAdmin(false);
+      return;
+    }
+    const email = data.user.email?.toLowerCase() || "";
+    const allowed = ["jdihs.cyber@gmail.com", "info@logicgridlab.com"];
+    setIsAdmin(allowed.includes(email));
+  };
+  check();
+}, []);
 
   const signOut = async () => {
     await queryClient.cancelQueries();
