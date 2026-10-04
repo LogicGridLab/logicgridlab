@@ -70,8 +70,7 @@ export default function AdminDashboard({ email }: { email: string }) {
       if (!data.user) { setIsAdmin(false); return; }
       const { data: roles } = await supabase
         .from("user_roles").select("role").eq("user_id", data.user.id).eq("role", "admin");
-      const allowed = ["info@logicgridlab.com", "jdihs.cyber@gmail.com"];
-setIsAdmin(Boolean(roles && roles.length > 0) && allowed.includes(data.user.email?.toLowerCase() || ""));
+      src/components/Admin
     });
   }, []);
 
