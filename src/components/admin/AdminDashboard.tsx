@@ -7,7 +7,8 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ProductsView, OrdersView } from "./StoreAdmin";
-import { Package, Receipt } from "lucide-react";
+import { ListingsView, SalesView, EditsView, PortalOverview } from "./PortalAdmin";
+import { Package, Receipt, Link2, DollarSign, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,6 +39,9 @@ type ChatLog = {
 const NAV = [
   { key: "overview", label: "Overview / Metrics", icon: BarChart3 },
   { key: "products", label: "Products", icon: Package },
+  { key: "listings", label: "Listings", icon: Link2 },
+  { key: "sales", label: "Sales", icon: DollarSign },
+  { key: "edits", label: "Edit Requests", icon: Wrench },
   { key: "orders", label: "Orders & Payments", icon: Receipt },
   { key: "inquiries", label: "Leads & Inquiries", icon: Inbox },
   { key: "subscriptions", label: "Subscriptions", icon: CreditCard },
@@ -66,7 +70,7 @@ export default function AdminDashboard({ email }: { email: string }) {
       if (!data.user) { setIsAdmin(false); return; }
       const { data: roles } = await supabase
         .from("user_roles").select("role").eq("user_id", data.user.id).eq("role", "admin");
-      setIsAdmin(Boolean(roles && roles.length > 0));
+      setIsAdmin(Boolean(roles && roles.length > 0) && data.user.email?.toLowerCase() === "info@logicgridlab.com");
     });
   }, []);
 
@@ -151,8 +155,11 @@ export default function AdminDashboard({ email }: { email: string }) {
           </div>
         </header>
         <main className="space-y-6 p-5">
-          {view === "overview" && <Overview onNavigate={setView} />}
+          {view === "overview" && <><Overview onNavigate={setView} /><PortalOverview /></>}
           {view === "products" && <ProductsView />}
+          {view === "listings" && <ListingsView />}
+          {view === "sales" && <SalesView />}
+          {view === "edits" && <EditsView />}
           {view === "orders" && <OrdersView />}
           {view === "inquiries" && <Inquiries />}
           {view === "subscriptions" && <Subscriptions />}
