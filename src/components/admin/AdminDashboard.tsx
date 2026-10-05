@@ -72,9 +72,8 @@ export default function AdminDashboard({ email }: { email: string }) {
       setIsAdmin(false);
       return;
     }
-    const email = data.user.email?.toLowerCase() || "";
-    const allowed = ["jdihs.cyber@gmail.com", "info@logicgridlab.com"];
-    setIsAdmin(allowed.includes(email));
+    const { data: ok } = await supabase.rpc("has_role", { _user_id: data.user.id, _role: "admin" });
+    setIsAdmin(ok === true);
   };
   check();
 }, []);
