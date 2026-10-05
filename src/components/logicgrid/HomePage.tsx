@@ -367,8 +367,8 @@ function About() {
             <img src={sirEjazAsset} loading="lazy" width={912} height={1172} alt="Ejaz Ahmed, founder of LogicGridLab" />
             <div className="founder-overlay"><div><span>Founder</span><h3>Ejaz Ahmed</h3><p>Full-Stack Product Engineer<br/>Etsy Automation Specialist</p></div><blockquote>“Our mission: Give small sellers the same analytics power big brands have.”</blockquote></div>
           </Reveal>
-          <Reveal className="office-card office-primary"><img src={ejazAsset} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed working at the CEO desk in Gujranwala HQ"/><div><span>Founder at work</span><strong>CEO Desk — Gujranwala HQ</strong></div></Reveal>
-          <Reveal className="office-card office-secondary"><img src={ceoAsset} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed signing documents at the CEO desk"/><div><span>Founder at work</span><strong>CEO Desk — Gujranwala HQ</strong></div></Reveal>
+          <Reveal className="office-card office-primary"><img src={ejazAsset} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed working at the CEO desk in Gujranwala HQ"/><div><span>Founder at work</span><strong>Hard work is my Passion</strong></div></Reveal>
+          <Reveal className="office-card office-secondary"><img src={ceoAsset} loading="lazy" width={912} height={1173} alt="Ejaz Ahmed signing documents at the CEO desk"/><div><span>Founder at work</span><strong>Hard work is my Passion</strong></div></Reveal>
           <div className="about-stats">{stats.map(([number,label]) => <Reveal key={label} className="stat-card"><strong>{number}</strong><span>{label}</span></Reveal>)}</div>
         </div>
       </div>
@@ -412,7 +412,7 @@ function Products() {
 }
 
 const galleryItems = [
-  { src: ceoAsset, caption: "CEO Desk — Gujranwala HQ", className: "gallery-tall" },
+  { src: ceoAsset, caption: "Hard work is my Passion", className: "gallery-tall" },
   { src: headsMeetingAsset, caption: "Leadership & Product Meetings", className: "gallery-tall" },
   { src: leadsMeetingAsset, caption: "Leadership & Product Meetings", className: "gallery-wide" },
   { src: clientMeetingAsset, caption: "Global Client Collaboration", className: "gallery-tall" },
