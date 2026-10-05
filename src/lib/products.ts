@@ -1,4 +1,4 @@
-export type ProductType = "digital_file" | "saas_access" | "webapp_tool" | "spreadsheet";
+export type ProductType = "digital_file" | "saas_access" | "webapp_tool" | "spreadsheet" | "extension";
 export type BillingType = "one-time" | "monthly" | "yearly";
 
 export const TYPE_LABEL: Record<ProductType, string> = {
@@ -6,6 +6,7 @@ export const TYPE_LABEL: Record<ProductType, string> = {
   saas_access: "SaaS",
   webapp_tool: "Web App",
   spreadsheet: "Excel / Sheets",
+  extension: "Extension",
 };
 
 export function formatPrice(price: number, currency: string, billing: BillingType) {

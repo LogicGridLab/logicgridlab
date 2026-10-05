@@ -438,6 +438,7 @@ export type Database = {
         | "saas_access"
         | "webapp_tool"
         | "spreadsheet"
+        | "extension"
       subscription_status: "active" | "canceled" | "past_due"
     }
     CompositeTypes: {
@@ -577,6 +578,7 @@ export const Constants = {
         "saas_access",
         "webapp_tool",
         "spreadsheet",
+        "extension",
       ],
       subscription_status: ["active", "canceled", "past_due"],
     },
