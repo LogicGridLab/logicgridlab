@@ -486,7 +486,7 @@ function FAQ() {
   return <section className="section-space"><div className="container-narrow"><Reveal><SectionHeading eyebrow="Questions, answered" title="A clear process from brief to launch." centered /></Reveal><Reveal><Accordion type="single" collapsible className="faq-list">{faqs.map(([question,answer],index)=><AccordionItem key={question} value={`item-${index}`}><AccordionTrigger><span><small>0{index+1}</small>{question}</span></AccordionTrigger><AccordionContent>{answer}</AccordionContent></AccordionItem>)}</Accordion></Reveal></div></section>;
 }
 
-function Contact() {
+export function Contact() {
   const [businessType, setBusinessType] = useState("");
   const [budget, setBudget] = useState("");
   const submit = async (event: FormEvent<HTMLFormElement>) => {
@@ -514,7 +514,7 @@ function Contact() {
 }
 
 function Footer() {
-  return <footer><div className="container-site"><div className="footer-main"><div><Brand/><p>Premium software products, AI agents, and growth systems — built in Gujranwala, shipping worldwide.</p></div><div className="footer-columns"><nav><strong>Explore</strong><a href="#products">Products</a><a href="#services">Services</a><a href="#pricing">Pricing</a></nav><nav><strong>Company</strong><a href="#about">About Lab</a><a href="#team">Our Team</a><a href="#contact">Contact</a><a href="mailto:logicgridlab@gmail.com">Email</a></nav><nav><strong>Legal</strong><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={etsyShopUrl} target="_blank" rel="noreferrer">Etsy Shop</a></nav></div></div><div className="footer-bottom"><span>Gujranwala, Punjab, Pakistan</span><a href="mailto:logicgridlab@gmail.com">logicgridlab@gmail.com</a><span>© 2026 LogicGridLab</span></div></div></footer>;
+  return <footer><div className="container-site"><div className="footer-main"><div><Brand/><p>Premium software products, AI agents, and growth systems — built in Gujranwala, shipping worldwide.</p></div><div className="footer-columns"><nav><strong>Explore</strong><a href="#products">Products</a><a href="#services">Services</a><a href="#pricing">Pricing</a></nav><nav><strong>Company</strong><a href="#about">About Lab</a><a href="#team">Our Team</a><a href="/contact">Contact</a><a href="mailto:logicgridlab@gmail.com">Email</a></nav><nav><strong>Legal</strong><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refund">Refund Policy</a><a href="/contact">Contact</a><a href={etsyShopUrl} target="_blank" rel="noreferrer">Etsy Shop</a></nav></div></div><div className="footer-bottom"><span>Gujranwala, Punjab, Pakistan</span><a href="mailto:logicgridlab@gmail.com">logicgridlab@gmail.com</a><span>© 2026 LogicGridLab</span></div></div></footer>;
 }
 
 export function HomePage() {
