@@ -1,34 +1,23 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { LegalLayout, Section, Mail, legalHead } from "@/components/logicgrid/LegalPage";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({
-    meta: [
-      { title: "Terms of Service — LogicGridLab" },
-      { name: "description", content: "General terms for LogicGridLab software products and professional services." },
-      { property: "og:title", content: "Terms of Service — LogicGridLab" },
-      { property: "og:description", content: "General terms for LogicGridLab software products and professional services." },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://logicgridlab.com/terms" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "https://logicgridlab.com/terms" }],
-  }),
+  head: () => legalHead("/terms", "Terms of Service — LogicGridLab", "Terms for LogicGridLab micro-SaaS tools including EtsyOps: licensing, LemonSqueezy payments, subscriptions and liability."),
   component: TermsPage,
 });
 
 function TermsPage() {
   return (
-    <main className="min-h-screen bg-background px-4 py-20 text-foreground">
-      <article className="mx-auto max-w-3xl">
-        <Link to="/" className="text-sm text-primary-soft">← Back to LogicGridLab</Link>
-        <p className="eyebrow mt-12"><span />Legal</p>
-        <h1 className="mt-4 font-display text-4xl font-semibold sm:text-5xl">Terms of Service</h1>
-        <div className="mt-10 space-y-8 text-sm leading-7 text-muted-foreground">
-          <section><h2 className="mb-2 text-lg font-semibold text-foreground">Project agreements</h2><p>Project scope, schedule, payment terms, deliverables, and support arrangements are confirmed in writing before work begins.</p></section>
-          <section><h2 className="mb-2 text-lg font-semibold text-foreground">Software products</h2><p>Product access and updates are provided according to the terms shown at purchase. Third-party platforms remain subject to their own terms and availability.</p></section>
-          <section><h2 className="mb-2 text-lg font-semibold text-foreground">Contact</h2><p>For questions about these terms, email <a className="text-primary-soft" href="mailto:info@logicgridlab.com">info@logicgridlab.com</a>.</p></section>
-        </div>
-      </article>
-    </main>
+    <LegalLayout title="Terms of Service" updated="October 8, 2026">
+      <Section title="1. Introduction"><p>LogicGridLab (Pvt) Ltd ("LogicGridLab", "we", "us") provides micro-SaaS tools such as EtsyOps, Contractor OS and related web applications and services. By purchasing, accessing or using our products you agree to these Terms. If you do not agree, do not use our products.</p></Section>
+      <Section title="2. License"><p>On purchase you receive a personal, non-transferable, non-exclusive, revocable license to access the hosted SaaS product using the license key issued through LemonSqueezy. The license is for your own business use and does not transfer ownership of any software.</p></Section>
+      <Section title="3. Payments via LemonSqueezy"><p>All payments are processed by LemonSqueezy, our Merchant of Record and third-party reseller, which handles billing, taxes and invoices. Standard pricing is $24 per month, $228 per year, or $149 for a lifetime license, unless a different price is shown at checkout. Prices may change for new purchases; existing terms are honoured for the active billing period.</p></Section>
+      <Section title="4. Subscriptions & Cancellation"><p>Monthly and annual subscriptions renew automatically at the end of each billing period until cancelled. You can cancel at any time through the LemonSqueezy customer portal linked in your receipt email. After cancellation you keep access until the end of the paid period. Refunds are covered by our <a className="text-primary-soft" href="/refund">Refund Policy</a>.</p></Section>
+      <Section title="5. Intellectual Property"><p>LogicGridLab owns all rights to the software, code, design, branding and documentation. You retain full ownership of your data, including your Etsy shop data, orders, listings and any information you enter.</p></Section>
+      <Section title="6. Etsy API & Third-party Platforms"><p>Some products connect to Etsy and other third-party platforms. Your use of those platforms is subject to their own terms. The term "Etsy" is a trademark of Etsy, Inc.; our products are not endorsed or certified by Etsy. We are not responsible for downtime, API changes, rate limits or policy changes made by Etsy or any third party.</p></Section>
+      <Section title="7. Prohibited Uses"><p>You may not resell, sublicense, share or distribute your license key; reverse engineer, decompile or copy the software; use the products for unlawful activity, spam or to violate any platform's terms; or attempt to disrupt or gain unauthorised access to our systems. We may suspend licenses that violate these rules.</p></Section>
+      <Section title="8. Limitation of Liability"><p>Products are provided "as is" without warranties of any kind. To the maximum extent permitted by law, LogicGridLab is not liable for indirect, incidental or consequential damages, lost profits or lost data. Our total liability for any claim is limited to the amount you paid us in the 12 months before the claim.</p></Section>
+      <Section title="9. Governing Law & Contact"><p>These Terms are governed by the laws of Pakistan, with courts in Punjab having jurisdiction. Questions about these Terms: <Mail />.</p></Section>
+    </LegalLayout>
   );
 }
