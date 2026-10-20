@@ -11,6 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TYPE_LABEL, formatPrice, slugify, type ProductType } from "@/lib/products";
+import { getLemonSqueezyUrl } from "@/lib/lemonsqueezy";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 type Order = Database["public"]["Tables"]["orders"]["Row"];
@@ -178,12 +179,14 @@ function EditorForm({ initial, onClose, onSaved }: { initial: Partial<Product>; 
     e.preventDefault();
     if (!p.title?.trim() || !p.slug?.trim()) { toast.error("Title and slug are required"); return; }
     if (Number(p.price) < 0 || Number.isNaN(Number(p.price))) { toast.error("Enter a valid price"); return; }
+    if (p.lemon_squeezy_url?.trim() && !getLemonSqueezyUrl(p.lemon_squeezy_url)) { toast.error("Enter a secure Lemon Squeezy checkout URL"); return; }
     setSaving(true);
     const payload = {
-      title: p.title.trim(), slug: slugify(p.slug), type: p.type!, price: Number(p.price), currency: (p.currency || "USD").toUpperCase().slice(0, 3),
-      billing_type: p.billing_type!, short_tagline: p.short_tagline || null, description: p.description || null, features: p.features ?? [],
+      title: p.title.trim(), slug: slugify(p.slug), type: p.type ?? "webapp_tool", price: Number(p.price), currency: (p.currency || "USD").toUpperCase().slice(0, 3),
+      billing_type: p.billing_type ?? "one-time", short_tagline: p.short_tagline || null, description: p.description || null, features: p.features ?? [],
       cover_image_url: p.cover_image_url || null, downloadable_file_url: p.downloadable_file_url || null,
-      external_access_url: p.external_access_url || null, demo_url: p.demo_url || null, status: p.status!, sort_order: p.sort_order ?? 0,
+      external_access_url: p.external_access_url || null, demo_url: p.demo_url || null, status: p.status ?? "draft", sort_order: p.sort_order ?? 0,
+      lemon_squeezy_url: getLemonSqueezyUrl(p.lemon_squeezy_url),
     };
     const { error } = p.id ? await supabase.from("products").update(payload).eq("id", p.id) : await supabase.from("products").insert(payload);
     setSaving(false);
@@ -240,6 +243,10 @@ function EditorForm({ initial, onClose, onSaved }: { initial: Partial<Product>; 
       </div>
       {needsUrl && <Input placeholder="External access URL (https://app...)" value={p.external_access_url ?? ""} onChange={(e) => set("external_access_url", e.target.value)} aria-label="External access URL" />}
       <Input placeholder="Public demo URL (optional)" value={p.demo_url ?? ""} onChange={(e) => set("demo_url", e.target.value)} aria-label="Demo URL" />
+      <div className="space-y-2">
+        <label htmlFor="lemon-checkout-url" className="text-sm font-medium">Lemon Squeezy checkout URL</label>
+        <Input id="lemon-checkout-url" type="url" placeholder="https://your-store.lemonsqueezy.com/buy/..." value={p.lemon_squeezy_url ?? ""} onChange={(e) => set("lemon_squeezy_url", e.target.value)} />
+      </div>
       <div className="flex justify-end gap-2">
         <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
         <Button type="submit" disabled={saving}>{saving && <Loader2 className="size-4 animate-spin" />}Save product</Button>

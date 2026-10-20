@@ -108,6 +108,7 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script src="https://assets.lemonsqueezy.com/lemon.js" defer />
       </head>
       <body>
         {children}

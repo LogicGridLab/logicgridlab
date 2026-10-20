@@ -10,11 +10,13 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { createOrder, PAYONEER_EMAIL } from "@/lib/store.functions";
 import { TYPE_LABEL, formatPrice, type BillingType, type ProductType } from "@/lib/products";
+import { getLemonSqueezyUrl } from "@/lib/lemonsqueezy";
 
 type PublicProduct = {
   id: string; title: string; slug: string; type: ProductType; price: number; currency: string;
   billing_type: BillingType; short_tagline: string | null; features: string[];
   cover_image_url: string | null; demo_url: string | null;
+  lemonSqueezyUrl: string | null;
 };
 
 export default function ProductStore() {
@@ -24,11 +26,11 @@ export default function ProductStore() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("products")
-        .select("id,title,slug,type,price,currency,billing_type,short_tagline,features,cover_image_url,demo_url,sort_order")
+        .select("id,title,slug,type,price,currency,billing_type,short_tagline,features,cover_image_url,demo_url,sort_order,lemon_squeezy_url")
         .eq("status", "published")
         .order("sort_order", { ascending: true });
       if (error) throw error;
-      return (data ?? []) as PublicProduct[];
+      return (data ?? []).map((p) => ({ ...p, lemonSqueezyUrl: p.lemon_squeezy_url })) as PublicProduct[];
     },
   });
 
@@ -75,6 +77,7 @@ function CheckoutDialog({ product, onClose }: { product: PublicProduct | null; o
   const submit = useServerFn(createOrder);
   const [method, setMethod] = useState<"card" | "payoneer">("payoneer");
   const [busy, setBusy] = useState(false);
+  const cardUrl = getLemonSqueezyUrl(product?.lemonSqueezyUrl);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -106,12 +109,31 @@ function CheckoutDialog({ product, onClose }: { product: PublicProduct | null; o
               <DialogDescription>{formatPrice(Number(product.price), product.currency, product.billing_type)} · {TYPE_LABEL[product.type]}</DialogDescription>
             </DialogHeader>
             <div className="grid grid-cols-2 gap-2">
-              <button type="button" onClick={() => setMethod("card")} className={`flex items-center gap-2 rounded-xl border p-3 text-left text-sm ${method === "card" ? "border-primary bg-primary/10" : "border-border"}`}><CreditCard className="size-4" />Credit / Debit card</button>
-              <button type="button" onClick={() => setMethod("payoneer")} className={`flex items-center gap-2 rounded-xl border p-3 text-left text-sm ${method === "payoneer" ? "border-primary bg-primary/10" : "border-border"}`}><Wallet className="size-4" />Payoneer</button>
+              <Button type="button" variant={method === "card" ? "secondary" : "outline"} aria-pressed={method === "card"} onClick={() => setMethod("card")} className="h-auto justify-start whitespace-normal p-3 text-left"><CreditCard className="size-4 shrink-0" />Credit / Debit card</Button>
+              <Button type="button" variant={method === "payoneer" ? "secondary" : "outline"} aria-pressed={method === "payoneer"} onClick={() => setMethod("payoneer")} className="h-auto justify-start p-3"><Wallet className="size-4" />Payoneer</Button>
             </div>
             {method === "card" ? (
-              <div className="rounded-xl border border-border p-4 text-sm text-muted-foreground">
-                Card checkout is being activated and will be available very soon. Please use Payoneer for now, or message us on WhatsApp for a card invoice.
+              <div className="space-y-3">
+                {cardUrl ? (
+                  <Button variant="premium" className="h-auto w-full whitespace-normal py-3" asChild>
+                    <a href={cardUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => {
+                      if (!window.LemonSqueezy?.Url?.Open) return;
+                      try {
+                        window.LemonSqueezy.Url.Open(cardUrl);
+                        e.preventDefault();
+                        onClose();
+                      } catch {
+                        // The link remains usable if the overlay script is blocked or unavailable.
+                      }
+                    }}><ShieldCheck className="shrink-0" />Proceed to Secure Card Checkout ({formatPrice(Number(product.price), product.currency, product.billing_type)})</a>
+                  </Button>
+                ) : (
+                  <>
+                    <Button variant="premium" className="h-auto w-full whitespace-normal py-3" disabled><ShieldCheck className="shrink-0" />Proceed to Secure Card Checkout ({formatPrice(Number(product.price), product.currency, product.billing_type)})</Button>
+                    <p className="text-sm text-muted-foreground">No card checkout link is available for this product yet. Please use Payoneer.</p>
+                  </>
+                )}
+                {cardUrl && <p className="text-center text-xs text-muted-foreground">Secure payment via Lemon Squeezy</p>}
               </div>
             ) : (
               <form onSubmit={onSubmit} className="space-y-3">
