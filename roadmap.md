@@ -12,5 +12,5 @@
 - [ ] Add real Stripe Payment Link URLs when available
 - [x] Product manager (add/edit/upload/duplicate/publish) and Orders tab in /admin
 - [x] Homepage products load from the product manager with Payoneer checkout + order status page
-- [ ] Card payments — blocked: built-in payments need a paid Lovable plan
+- [ ] Lemon Squeezy card checkout: add script, product URL setting, and checkout button; real product checkout URLs required
 - [ ] Receipt emails — blocked: sender domain setup for logicgridlab.com

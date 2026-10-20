@@ -261,6 +261,7 @@ export type Database = {
           external_access_url: string | null
           features: string[]
           id: string
+          lemon_squeezy_url: string | null
           price: number
           sales_count: number
           short_tagline: string | null
@@ -286,6 +287,7 @@ export type Database = {
           external_access_url?: string | null
           features?: string[]
           id?: string
+          lemon_squeezy_url?: string | null
           price?: number
           sales_count?: number
           short_tagline?: string | null
@@ -311,6 +313,7 @@ export type Database = {
           external_access_url?: string | null
           features?: string[]
           id?: string
+          lemon_squeezy_url?: string | null
           price?: number
           sales_count?: number
           short_tagline?: string | null
